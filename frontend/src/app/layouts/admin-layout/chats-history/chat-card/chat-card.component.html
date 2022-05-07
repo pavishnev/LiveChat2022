@@ -1,0 +1,49 @@
+<div class="wrapper">
+  <mat-card class="header">
+    <mat-card-content class="flexbox">
+  <span><b>Client: </b>{{clientName}}</span>
+  <span><b>Agent: </b>{{agentName}}</span>
+    </mat-card-content>
+
+  </mat-card>
+
+  <mat-card class="chat-box">
+    <div class="body">
+      <div class="chat-status">
+        Chat Started
+         <p>{{startedAt|date:"medium" }}</p>
+      </div>
+
+      <div *ngFor="let message of messagesArchive" [ngClass]="
+       {
+       'message': true,
+       'user': message.isSentByClient,
+       'agent': !message.isSentByClient
+       }">
+        <p class="text">{{message.text}}</p>
+        <p class="date">{{message.timestamp|date:"medium" }}</p>
+        
+      </div>
+
+      <div class="chat-status">
+        Chat Ended
+         <p>{{endedAt|date:"medium" }}</p>
+      </div>
+    </div>
+  </mat-card>
+<mat-card>  
+  <button mat-flat-button color="accent" class="back-button" (click)="goToParentComponent()">Back to chat history</button>
+</mat-card>
+
+<!--
+  <mat-card class="message-box">
+    <mat-form-field appearance="fill" class="input-box">
+      <mat-label>Message</mat-label>
+      <input matInput #messageText>
+    </mat-form-field>
+    <button mat-mini-fab (click)="sendMessage(messageText.value)" class="send-button">
+      <mat-icon>send</mat-icon>
+    </button>
+  </mat-card>
+-->
+</div>

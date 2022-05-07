@@ -1,0 +1,58 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.wrapper {
+    background-color: white;
+    border: 1px solid white;
+  width: 70%;
+  margin: 1rem auto;
+  height: 100%;
+}
+
+.login-form {
+  width: 300px;
+
+  margin: 0 auto;
+  padding: 10px;
+
+  /* Flex Wrapping */
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.login-form .text-input {
+  margin-bottom: 5px;
+  width: 100%;
+}
+
+.login-form .links {
+  width: 100%;
+
+  margin-bottom: 10px;
+
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.login-form .links .link {
+  margin: 0 10px;
+
+  font-weight: lighter;
+
+  color: #3f51b5;
+
+  text-decoration: none;
+}
+
+.signin-btn {
+  width: 100%;
+}
+
+.hidden{
+  display: none !important;
+}

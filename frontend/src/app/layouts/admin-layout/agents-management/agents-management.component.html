@@ -1,0 +1,52 @@
+<div class="wrapper">
+<mat-card class="header-cell">
+  <button
+   mat-raised-button 
+   color="primary" 
+   class="align-r button" 
+   routerLink="add-agent"
+   >Add new agent</button>
+     
+
+     
+</mat-card>
+  <div class="mat-elevation-z8">
+    <mat-table #table [dataSource]="dataSource">
+
+      <!-- Position Column 
+    <ng-container matColumnDef="position">
+      <th mat-header-cell *matHeaderCellDef> No. </th>
+      <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+    </ng-container>-->
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+
+      <!-- chat start date Column -->
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef> Email </th>
+        <td mat-cell *matCellDef="let element"> {{element.email }} </td>
+      </ng-container>
+
+      <!-- chat end date Column -->
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef> Agent status </th>
+        <td mat-cell *matCellDef="let element"> {{element.status }} </td>
+      </ng-container>
+
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row 
+      [routerLink]="row.id" 
+      *matRowDef="let row; columns: displayedColumns;"></tr>
+      <!-- [queryParams]="{name: row.name}"-->
+    </mat-table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
+    </mat-paginator>
+  </div>
+
+</div>

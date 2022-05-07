@@ -1,0 +1,15 @@
+.wrapper {
+  height: calc(100% - 125px);
+}
+
+
+.filters{
+    border: 1px solid green;
+}
+tr:hover {
+  background: #e0e0e0;
+  cursor:pointer;
+  /* Цвет фона при наведении */
+  color: #fff;
+  /* Цвет текста при наведении */
+}

@@ -1,0 +1,17 @@
+.wrapper {
+  background-color: white;
+  border: 1px solid black;
+  width: 70%;
+  margin: 1rem auto;
+  height: calc(100% - 125px);
+}
+
+.copy-field{
+    width: 100%;
+}
+.wrapper{
+    width: 50% !important;
+}
+.warning{
+    color: orangered;
+}

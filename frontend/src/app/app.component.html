@@ -1,0 +1,51 @@
+<div class="toolbar">
+  <mat-toolbar color="primary">
+    <button mat-icon-button (click)="drawer.toggle()" class="menu-button hidden"
+      aria-label="Example icon-button with menu icon">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span>LiveChat2021</span>
+    <span class="spacer"></span>
+    <button *ngIf="this.isUserAuthorized"
+
+        (click)="this.signOut()"
+        class="signout-btn"
+         mat-flat-button
+         aria-label="Sign out">Sign out</button>
+    <button class="hidden" mat-icon-button aria-label="Example icon-button with share icon">
+      <mat-icon>person</mat-icon>
+    </button>
+  </mat-toolbar>
+</div>
+<mat-drawer-container class="container" hasBackdrop="true">
+  <mat-drawer class="drawer" #drawer mode="over">
+    <div class="drawer-menu">
+      <mat-nav-list>
+
+        <mat-divider></mat-divider>
+
+        <a mat-list-item class="link-btn" (click)="drawer.close()" routerLink="/auth">
+          Auth
+        </a>
+
+        <mat-divider></mat-divider>
+
+        <a mat-list-item class="link-btn" (click)="drawer.close()" routerLink="agent/chats">
+          Chats
+        </a>
+ <a mat-list-item class="link-btn" (click)="drawer.close()" routerLink="/admin/chats-history">
+   Admin page
+ </a>
+ <a mat-list-item class="link-btn" (click)="drawer.close()" routerLink="/complete-registration/?id=fff">
+   Complete regisrtation for agent
+ </a>
+ <mat-divider></mat-divider>
+        <mat-divider></mat-divider>
+      </mat-nav-list>
+    </div>
+  </mat-drawer>
+
+  <div class="page">
+    <router-outlet></router-outlet>
+  </div>
+</mat-drawer-container>

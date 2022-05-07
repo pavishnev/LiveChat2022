@@ -1,0 +1,9 @@
+.wrapper {
+  background-color: white;
+  border: 1px solid black;
+  width: 70%;
+  margin: 1rem auto;
+}
+.copy-field {
+  width: 100%;
+}

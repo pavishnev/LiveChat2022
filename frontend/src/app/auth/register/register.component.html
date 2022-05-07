@@ -1,0 +1,68 @@
+<form [formGroup]="registerForm" class="register-form">
+  <mat-form-field appearance="fill" class="text-input">
+    <mat-label>Name</mat-label>
+
+    <input formControlName="name" matInput placeholder="John Doe"
+           required type="text">
+
+    <mat-error *ngIf="f.name.errors?.required">This field is required to fill in</mat-error>
+
+    <mat-icon matSuffix>person</mat-icon>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="text-input">
+    <mat-label>Email</mat-label>
+
+    <input formControlName="email" matInput placeholder="email@example.com"
+           required type="email">
+
+    <mat-error *ngIf="f.email.errors?.required">This field is required to fill in</mat-error>
+    <mat-error *ngIf="f.email.errors?.email">Invalid email format</mat-error>
+
+    <mat-icon matSuffix>email</mat-icon>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="text-input">
+    <mat-label>Password</mat-label>
+
+    <input [type]="hide ? 'password' : 'text'" formControlName="password" id="password"
+           matInput required>
+
+    <mat-error *ngIf="f.password.errors?.required">This field is required to fill in</mat-error>
+    <mat-error *ngIf="f.password.errors?.minlength">Password must be > 6 character long</mat-error>
+
+    <button (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" mat-icon-button
+            matSuffix>
+      <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+    </button>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="text-input">
+    <mat-label>Confirm Password</mat-label>
+
+    <input formControlName="confirmPassword" matInput
+           required type="text">
+
+    <mat-error *ngIf="f.confirmPassword.errors?.required">This field is required to fill in</mat-error>
+    <mat-error *ngIf="f.confirmPassword.errors?.mustMatch">Password should be same as Confirm password</mat-error>
+
+    <mat-icon matSuffix>password</mat-icon>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="text-input">
+    <mat-label>Website</mat-label>
+
+    <input formControlName="websiteUrl" matInput placeholder="https://www.website.com"
+           required type="text">
+
+    <mat-error *ngIf="f.websiteUrl.errors?.required">This field is required to fill in</mat-error>
+
+    <mat-icon matSuffix>link</mat-icon>
+  </mat-form-field>
+
+  <div class="links">
+    <a class="link" style="display:none;"  routerLink="/login">Already have an account? Sign In</a>
+  </div>
+
+  <button (click)="submit();" class="signup-btn" color="primary" mat-flat-button>Sign Up</button>
+</form>

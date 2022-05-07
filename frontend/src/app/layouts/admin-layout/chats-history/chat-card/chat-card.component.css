@@ -1,0 +1,95 @@
+.wrapper {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.back-button{
+   width: 100%;
+}
+.flexbox {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content:space-between;
+  width: 100%;
+  vertical-align:middle;
+}
+
+
+.spacer {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.chat-box {
+  height: calc(100vh - 260px);
+  margin-top: 10px;
+  align-self: center;
+  overflow: auto;
+}
+
+.message-box {
+  margin-top: 10px;
+  height: 30px;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.input-box {
+  width: 100%;
+}
+
+.send-button {
+  margin-left: 8px;
+}
+
+.body {
+  margin: 0 auto;
+
+  width: 100%; 
+
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+}
+
+.body .chat-status {
+  font-weight: bold;
+  text-transform: uppercase;
+  margin: 8px;
+  text-align: center;
+}
+
+.body .message {
+  height: auto;
+  width: 100%;
+
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.body .message .text {
+  height: auto;
+  max-width: 300px;
+
+  margin-bottom: 5px;
+  padding: 10px;
+
+  background-color: #c4c4c4;
+  border-radius: 10px;
+}
+
+.chat-box .body .message.user {
+  align-items: flex-start;
+}
+
+.chat-box .body .message.agent {
+  align-items: flex-end;
+}
+
+.chat-box .body .message.user .text {
+  background-color: #8fa8bb;
+}

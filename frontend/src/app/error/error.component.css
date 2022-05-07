@@ -1,0 +1,23 @@
+.page-container {
+  width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+
+  margin-top: 128px;
+}
+
+.error-text {
+  font-size: 128px;
+  font-weight: bold;
+  color: #3f51b5;
+  text-transform: uppercase;
+
+  padding: 36px;
+}
+
+.page-not-found {
+  padding: 36px;
+  font-size: 52px;
+  font-weight: lighter;
+}

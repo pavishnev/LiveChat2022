@@ -1,0 +1,38 @@
+<div class="wrapper">
+ <mat-card>
+   <mat-card-title>{{name}}</mat-card-title>
+   <mat-card-subtitle>Role - agent
+  </mat-card-subtitle>
+<mat-card-content>
+  <p><b>User id: </b>{{id}}</p>
+  <p><b>E-mail: </b>{{email}}</p>
+ <p><b>Status: </b>{{status}}</p>
+  <p> <b>Total chats completed: </b>{{CompletedChatsCount}}</p>
+ <mat-form-field *ngIf="isInvited" appearance="fill" class="text-input copy-field">
+   <mat-label>Invitation link</mat-label>
+
+   <input [disabled]="true" id="code" matInput [value]="invitationLink">
+
+   <button (click)="copyToClipboard()" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="" mat-icon-button
+     matSuffix>
+     <mat-icon>link</mat-icon>
+   </button>
+ </mat-form-field>
+ <p *ngIf="isInvited"> Copy the invitation link and give it to your agent to complete the registration</p>
+   <p *ngIf="isExpired" class="warning"> The link is expired. Register this user again </p>
+</mat-card-content>
+<mat-card-actions>
+  <button
+   mat-raised-button
+    color="primary"
+    (click)=" goToParent()">Back to the menu
+  </button>
+   <button mat-raised-button 
+   color="warn"
+      (click)=" openDialog()"
+   >Delete agent
+   </button>
+
+</mat-card-actions>
+</mat-card>
+</div>

@@ -1,0 +1,187 @@
+.wrapper {
+  width: 100%;
+  height: calc(100% - 86px);
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  padding-top: 70px;
+}
+
+.chat-box {
+  width: 70%;
+  height: 100%;
+  margin-right: 10px;
+}
+
+.chat-box .toolbar {
+  height: 40px;
+}
+
+.chat-box .chat {
+  height: calc(100% - 65px);
+}
+
+.chats {
+  width: 30%;
+  height: 100%;
+  margin: 10px;
+}
+
+.chat {
+  overflow: auto;
+}
+
+.mat-card {
+  padding: 0;
+}
+
+.toolbar {
+  display: none;
+}
+
+.message-box {
+  height: 40px;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  margin-top: 10px;
+}
+
+.input-box {
+  width: 100%;
+}
+
+.send-button {
+  margin: 0 18px 18px 18px;
+}
+
+.body {
+  margin: 0 auto;
+
+  width: 100%;
+  overflow-x: hidden;
+
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+}
+
+.body .chat-status {
+  font-weight: bold;
+  text-transform: uppercase;
+  margin: 8px;
+}
+
+.online-status-switch {
+  height: 40px;
+  width: 100%;
+
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.online-status-switch .toggle {
+  margin-right: 10px;
+}
+
+.body .message {
+  height: auto;
+  width: 100%;
+
+  display: flex;
+  flex-flow: column nowrap;
+  padding: 0 25px;
+}
+
+.body .message .text {
+  height: auto;
+  max-width: 300px;
+
+  margin: 0px 15px 5px 15px;
+  padding: 10px;
+
+  background-color: #c4c4c4;
+  border-radius: 10px;
+}
+
+.body .message .date {
+  font-size: 12px;
+  margin: 0px 15px 5px 15px;
+}
+
+.chat-box .body .message.user {
+  align-items: flex-start;
+}
+
+.chat-box .body .message.agent {
+  align-items: flex-end;
+}
+
+.chat-box .body .message.user .text {
+  background-color: #8fa8bb;
+}
+
+.chatListItem .btn {
+  width: 100%;
+  height: 64px;
+  border-bottom: solid #c4c4c4;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  background: none;
+
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: flex-start;
+
+  cursor: pointer;
+}
+
+.chatListItem .btn .icon {
+  margin: 12px;
+}
+
+.chatListItem .btn .msg-n-name {
+  margin: 0;
+  font-size: 14px;
+}
+
+.chats {
+  overflow: auto;
+}
+
+.remove-chat {
+  justify-self: flex-end;
+}
+
+@media screen and (max-width: 1000px) {
+  .chat-box {
+    width: 100%;
+    margin: 0;
+    height: 100%;
+  }
+
+  .chat-box .chat {
+    height: calc(100% - 115px);
+    margin-top: 10px;
+  }
+
+  .chats {
+    width: 100%;
+    margin: 0;
+  }
+
+  .isVisible {
+    display: none;
+  }
+
+  .toolbar {
+    display: block;
+  }
+}

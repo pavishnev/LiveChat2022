@@ -1,0 +1,42 @@
+.register-form {
+  width: 300px;
+
+  margin: 0 auto;
+  padding: 10px;
+
+  /* Flex Wrapping */
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.register-form .text-input {
+  margin-bottom: 5px;
+  width: 100%;
+}
+
+.register-form .links {
+  width: 100%;
+
+  margin-bottom: 10px;
+
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.register-form .links .link {
+  margin: 0 10px;
+
+  font-weight: lighter;
+
+  color: #3f51b5;
+
+  text-decoration: none;
+}
+
+.signup-btn {
+  width: 100%;
+}

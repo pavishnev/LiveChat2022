@@ -1,0 +1,86 @@
+<mat-card
+  class="chat-box"
+  *ngIf="isOpen && isTokenReceived"
+  [@inOutAnimation]
+>
+  <div class="header">
+    <button mat-stroked-button class="end-chat-button" (click)="closeChat()">end chat</button>
+  </div>
+
+  <div class="body">
+    <div class="chat-status">
+      Chat Started
+    </div>
+
+    <div *ngFor="let message of received"
+         [ngClass]="
+       {
+       'message': true,
+       'user': message.isSentByClient,
+       'agent': !message.isSentByClient
+       }"
+    >
+      <p class="text">{{message.text}}</p>
+      <p class="date">{{this.pipe.transform(message.timestamp, 'short')}}</p>
+    </div>
+
+    <div class="chat-status">
+      Chat Ended
+    </div>
+  </div>
+
+  <div class="footer">
+    <mat-form-field
+      appearance="fill"
+      class="message-input"
+    >
+      <mat-label>Message</mat-label>
+      <input
+        matInput type="text"
+        class="message-input"
+        placeholder="Type your message here..."
+        autocomplete="off"
+        #messageInput
+      >
+    </mat-form-field>
+
+    <button
+      mat-icon-button
+      class="send-message-button"
+      (click)="sendMessage(messageInput.value, 'test')">
+      <mat-icon>send</mat-icon>
+    </button>
+  </div>
+
+</mat-card>
+
+<mat-card
+  class="chat-box name-form"
+  *ngIf="isOpen && !isTokenReceived"
+  [@inOutAnimation]
+>
+  <mat-form-field
+    appearance="fill"
+    class="name-input"
+  >
+    <mat-label>Your Name</mat-label>
+    <input
+      matInput type="text"
+      class="name-input"
+      placeholder="Type your name in here..."
+      #nameInput
+    >
+  </mat-form-field>
+
+  <button mat-raised-button
+          color="primary"
+          (click)="sendName(nameInput.value)"
+  >
+    Start Chat
+  </button>
+</mat-card>
+
+<button mat-fab color="primary" class="chat-button"
+        (click)="toggleChat()">
+  <mat-icon>{{isOpen ? "close" : "comment"}}</mat-icon>
+</button>

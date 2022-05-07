@@ -1,0 +1,33 @@
+  <div class="navbar">
+  <mat-toolbar color="primary" class="row d-flex">
+  
+    <!--
+      <span>LiveChat2021 - admin</span>
+    -->
+    <span class="mx-auto"></span>
+
+    <nav mat-tab-nav-bar 
+    class="d-flex"
+    backgroundColor="primary">
+      <a mat-tab-link 
+      routerLink="/admin/chats-history">
+       chats-history
+      </a>
+        <a mat-tab-link
+         routerLink="/admin/widget">
+          widget
+        </a>
+     <a mat-tab-link routerLink="/admin/agents-management">
+       agents management
+     </a>
+    </nav>
+    
+
+     <span class="mx-auto"></span>
+  </mat-toolbar>
+</div>
+
+<div>
+  <router-outlet></router-outlet>
+</div>
+

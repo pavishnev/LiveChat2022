@@ -1,0 +1,30 @@
+<div class="wrapper">
+<form [formGroup]="loginForm" class="login-form">
+  
+  <mat-form-field appearance="fill" class="text-input">
+    <mat-label>Email</mat-label>
+
+    <input formControlName="email" matInput placeholder="email@example.com" required type="email">
+
+    <mat-error *ngIf="this.loginForm.get('email')?.invalid">{{getErrorMessage()}}</mat-error>
+
+    <mat-icon matSuffix>email</mat-icon>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="text-input">
+    <mat-label>Agent Name</mat-label>
+
+    <input formControlName="name" id="name" matInput required>
+
+    <mat-error *ngIf="this.loginForm.get('name')?.invalid">{{getErrorMessage()}}</mat-error>
+
+    <button (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" mat-icon-button
+      matSuffix>
+      <mat-icon>face</mat-icon>
+    </button>
+  </mat-form-field>
+
+
+  <button (click)="submit();" class="signin-btn" color="primary" mat-flat-button>Sign Up New Agent</button>
+</form>
+</div>

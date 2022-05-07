@@ -1,0 +1,66 @@
+<div class="wrapper">
+  <mat-card class="chats" [ngClass]="
+      {
+        'isVisible': chatsVisible
+      }
+    ">
+    <div class="online-status-switch">
+      <mat-slide-toggle
+        (click)="this.switchOnlineStatus()"
+        checked="true"
+        class="toggle"
+      >{{isOnline ? 'Online' : 'Offline'}}</mat-slide-toggle>
+    </div>
+    <div class="chats-list">
+      <div class="chatListItem" *ngFor="let chatListItem of chats">
+        <button class="btn" (click)="setCurrentChat(chatListItem);">
+          <mat-icon class="icon">person</mat-icon>
+          <p class="msg-n-name">
+            {{ chatListItem.user.name }} -- {{ chatListItem.messages[chatListItem.messages.length - 1].text.substring(0, 12) }}
+          </p>
+        </button>
+      </div>
+    </div>
+  </mat-card>
+  <div class="chat-box" [ngClass]="
+    {
+      'isVisible': !chatsVisible
+    }
+    ">
+    <mat-card class="toolbar">
+      <button (click)="toggleChatBox()" mat-icon-button>
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+    </mat-card>
+    <mat-card class="chat">
+      <div class="body">
+        <div *ngFor="let message of chat.messages" [ngClass]="
+       {
+       'message': true,
+       'user': message.isSentByClient,
+       'agent': !message.isSentByClient
+       }">
+          <p class="text">{{message.text}}</p>
+          <p class="date">{{this.pipe.transform(message.timestamp, 'short')}}</p>
+        </div>
+      </div>
+    </mat-card>
+    <mat-card class="message-box">
+      <mat-form-field appearance="fill" class="input-box">
+        <mat-label>Message</mat-label>
+        <input matInput #messageText>
+      </mat-form-field>
+      <button
+        mat-mini-fab
+        [disabled]="this.chats.indexOf(this.chat) == -1"
+        (click)="
+          sendMessage(messageText.value);
+          this.messageText.value = '';
+        "
+        class="send-button">
+        <mat-icon>send</mat-icon>
+      </button>
+    </mat-card>
+  </div>
+
+</div>

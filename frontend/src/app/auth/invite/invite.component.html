@@ -1,0 +1,32 @@
+<div class="wrapper">
+  <form [formGroup]="registerForm" class="login-form">
+
+    <mat-form-field appearance="fill" class="text-input">
+      <mat-label>Password</mat-label>
+
+      <input [type]="hide ? 'password' : 'text'" formControlName="password" id="password" matInput required>
+
+      <mat-error *ngIf="f.password.errors?.required">This field is required to fill in</mat-error>
+      <mat-error *ngIf="f.password.errors?.minlength">Password must be > 6 character long</mat-error>
+
+      <button (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" mat-icon-button
+        matSuffix>
+        <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="text-input">
+      <mat-label>Confirm Password</mat-label>
+
+      <input formControlName="confirmPassword" matInput required type="text">
+
+      <mat-error *ngIf="f.confirmPassword.errors?.required">This field is required to fill in</mat-error>
+      <mat-error *ngIf="f.confirmPassword.errors?.mustMatch">Password should be same as Confirm password</mat-error>
+
+      <mat-icon matSuffix>password</mat-icon>
+    </mat-form-field>
+
+
+    <button (click)="submit();" class="signin-btn" color="primary" mat-flat-button>Sign Up New Agent</button>
+  </form>
+</div>
