@@ -42,16 +42,13 @@ namespace LiveChat.Api.Controllers
           
             string hostUrl = HttpContext.Request.Scheme + "://" + HttpContext.Request.Host;
             
-            string cssCode = $"<link rel=\"stylesheet\" href=\"{hostUrl}/api/widget/chat-styles\">";
+            //string cssCode = $"<link rel=\"stylesheet\" href=\"{hostUrl}/api/widget/chat-styles\">";
           
             StringBuilder jsCode = new ();
             jsCode.Append($"<livechat2021-chat website-id=\"{websiteId}\"></livechat2021-chat>");
             jsCode.Append($"<script type = \"text/javascript\" src = \"{hostUrl}/api/widget/chat-script\"></script>");
-            return Ok(new
-            {
-                cssCode = cssCode,
-                jsCode = jsCode.ToString()
-            });
+            jsCode.Append($"<link  href=\"{hostUrl}/api/widget/chat-styles\" type=\"text/css\" rel=\"stylesheet\">");
+            return Ok(new { jsCode = jsCode.ToString() });
 
         }
     }

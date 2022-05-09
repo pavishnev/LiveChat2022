@@ -18,8 +18,10 @@ private widgetApiUrl = environment.apiUrl + "/widget";
 
   constructor(private httpClient: HttpClient) { }
 
-  public getWidgetCode():Observable<Widget>{
-    return this.httpClient.get<Widget>(`${this.widgetApiUrl}/chat-widget/`,{headers:headers});
+  public getWidgetCode():Observable<any>{
+    return this.httpClient.get<any>(`${this.widgetApiUrl}/chat-widget/`, {
+      headers: headers,
+    });
   }
 
 }
