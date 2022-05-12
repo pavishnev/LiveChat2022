@@ -1,6 +1,17 @@
 .wrapper {
   max-width: 700px;
   margin: 0 auto;
+      background-color: #ffffff00;
+}
+
+.search-input{
+margin: 1rem 0 0 1rem;
+
+}
+
+.controls{
+  padding: 0;
+  margin-top: 1rem;
 }
 
 .back-button{
@@ -63,7 +74,7 @@
   text-align: center;
 }
 
-.body .message {
+.body .message {  
   height: auto;
   width: 100%;
 

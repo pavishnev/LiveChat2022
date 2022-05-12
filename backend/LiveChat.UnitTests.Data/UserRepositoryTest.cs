@@ -54,7 +54,7 @@ namespace LiveChat.UnitTests.Data
             };
             _context.Users.AddRange(user);
             _context.SaveChanges();
-            var email ="c";
+            var email ="example@yopmail.com";
             var repository = new UserRepository(_context);
             // Act
             var result = repository.GetByEmail(email);
