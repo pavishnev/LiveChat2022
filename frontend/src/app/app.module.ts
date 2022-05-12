@@ -1,10 +1,11 @@
 // Angular imports
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from "@angular/forms";
 import { JwtModule } from '@auth0/angular-jwt';
+import { FormsModule } from '@angular/forms';
 
 // Components
 import { AppComponent } from './app.component';
@@ -46,6 +47,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import {MatDialogModule} from '@angular/material/dialog';
+import { TokenInterceptor } from './interceptors/token.interceptor';
 ///
 
 export function tokenGetter(): string|null {
@@ -69,39 +71,47 @@ export function tokenGetter(): string|null {
     ViewAgentComponent,
     DialogOverviewExampleDialog,
     InviteComponent,
-    ErrorComponent
+    ErrorComponent,
   ],
-    imports: [
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        BrowserModule,
-        HttpClientModule,
-        MatButtonModule,
-        MatCardModule,
-        MatDividerModule,
-        MatFormFieldModule,
-        MatIconModule,
-        MatInputModule,
-        MatSnackBarModule,
-        ReactiveFormsModule,
-        MatToolbarModule,
-        MatSidenavModule,
-        MatSelectModule,
-        MatOptionModule,
-        MatPaginatorModule,
-        MatTableModule,
-        MatListModule,
-        MatTabsModule,
-        MatDialogModule,
-        JwtModule.forRoot({
-            config: {
-                tokenGetter,
-                allowedDomains: environment.allowedApiDomainsAuth
-            }
-        }),
-        MatSlideToggleModule,
-    ],
-  providers: [],
-  bootstrap: [AppComponent]
+  imports: [
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    BrowserModule,
+    HttpClientModule,
+    MatButtonModule,
+    MatCardModule,
+    MatDividerModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatSnackBarModule,
+    ReactiveFormsModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatSelectModule,
+    MatOptionModule,
+    MatPaginatorModule,
+    MatTableModule,
+    MatListModule,
+    MatTabsModule,
+    MatDialogModule,
+    
+    FormsModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter,
+        allowedDomains: environment.allowedApiDomainsAuth,
+      },
+    }),
+    MatSlideToggleModule,
+  ],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true,
+    },
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

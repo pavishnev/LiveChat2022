@@ -1,20 +1,29 @@
 <div class="wrapper">
   <mat-card class="header">
     <mat-card-content class="flexbox">
-  <span><b>Client: </b>{{clientName}}</span>
-  <span><b>Agent: </b>{{agentName}}</span>
+      <span><b>Client: </b>{{clientName}}</span>
+      <span><b>Agent: </b>{{agentName}}</span>
     </mat-card-content>
 
+  </mat-card>
+  
+  <mat-card class="controls">
+    <mat-icon class="search-input" matSuffix>search</mat-icon>
+    <mat-form-field appearance="outline" class="search-input">
+      <mat-label>Search</mat-label>
+      <input matInput type="text" [(ngModel)]="searchText" autocomplete="off" placeholder="Start searching">
+      <mat-icon matSuffix (click)="clearSearch()">clear</mat-icon>
+    </mat-form-field>
   </mat-card>
 
   <mat-card class="chat-box">
     <div class="body">
       <div class="chat-status">
         Chat Started
-         <p>{{startedAt|date:"medium" }}</p>
+        <p>{{startedAt|date:"medium" }}</p>
       </div>
 
-      <div *ngFor="let message of messagesArchive" [ngClass]="
+      <div *ngFor="let message of getFilteredMessagesArchive()" [ngClass]="
        {
        'message': true,
        'user': message.isSentByClient,
@@ -22,20 +31,21 @@
        }">
         <p class="text">{{message.text}}</p>
         <p class="date">{{message.timestamp|date:"medium" }}</p>
-        
+
       </div>
 
       <div class="chat-status">
         Chat Ended
-         <p>{{endedAt|date:"medium" }}</p>
+        <p>{{endedAt|date:"medium" }}</p>
       </div>
     </div>
   </mat-card>
-<mat-card>  
-  <button mat-flat-button color="accent" class="back-button" (click)="goToParentComponent()">Back to chat history</button>
-</mat-card>
+  <mat-card>
+    <button mat-flat-button color="accent" class="back-button" (click)="goToParentComponent()">Back to chat
+      history</button>
+  </mat-card>
 
-<!--
+  <!--
   <mat-card class="message-box">
     <mat-form-field appearance="fill" class="input-box">
       <mat-label>Message</mat-label>
