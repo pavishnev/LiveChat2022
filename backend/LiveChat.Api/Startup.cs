@@ -55,8 +55,12 @@ namespace LiveChat.Api
 
             services.AddSignalR();
             services.AddControllers();
+
             var authOptionsSection = Configuration.GetSection("Auth");
             services.Configure<AuthOptions>(authOptionsSection);
+
+            var sendgridOptionsSection = Configuration.GetSection("Sendgrid");
+            services.Configure<SendgridOptions>(sendgridOptionsSection);
 
             services.AddDbContextPool<LiveChatDbContext>(options => {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));

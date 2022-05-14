@@ -23,8 +23,9 @@ namespace LiveChat.UnitTests.Business
             var passwordTokenRepository = A.Fake<IPasswordChangeTokenRepository>();
             var userRepository = A.Fake<IUserRepository>();
             var authOptions = A.Fake<IOptions<AuthOptions>>();
+            var sendgridOptions = A.Fake<IOptions<SendgridOptions>>();
             var websiteRepository = A.Fake<IWebsiteRepository>();
-            var service = new UserService(userRepository, passwordTokenRepository, websiteRepository, authOptions);
+            var service = new UserService(userRepository, passwordTokenRepository, websiteRepository, authOptions, sendgridOptions);
 
             A.CallTo(() => websiteRepository.Add(A<Website>.Ignored)).Returns(new Website());
             A.CallTo(() => userRepository.Add(A<User>.Ignored)).Returns(new User() { Id = new Guid("83A9E26C-07B1-4821-B4A3-56CA06EBF4C7") });
@@ -43,8 +44,9 @@ namespace LiveChat.UnitTests.Business
             var passwordTokenRepository = A.Fake<IPasswordChangeTokenRepository>();
             var userRepository = A.Fake<IUserRepository>();
             var authOptions = A.Fake<IOptions<AuthOptions>>();
+            var sendgridOptions = A.Fake<IOptions<SendgridOptions>>();
             var websiteRepository = A.Fake<IWebsiteRepository>();
-            var service = new UserService(userRepository, passwordTokenRepository, websiteRepository, authOptions);
+            var service = new UserService(userRepository, passwordTokenRepository, websiteRepository, authOptions, sendgridOptions);
 
             A.CallTo(() => websiteRepository.Add(A<Website>.Ignored)).Returns(new Website());
             A.CallTo(() => userRepository.Add(A<User>.Ignored)).Returns(new User() { Id = new Guid("83A9E26C-07B1-4821-B4A3-56CA06EBF4C7") });
@@ -64,8 +66,9 @@ namespace LiveChat.UnitTests.Business
             var passwordTokenRepository = A.Fake<IPasswordChangeTokenRepository>();
             var userRepository = A.Fake<IUserRepository>();
             var authOptions = A.Fake<IOptions<AuthOptions>>();
+            var sendgridOptions = A.Fake<IOptions<SendgridOptions>>();
             var websiteRepository = A.Fake<IWebsiteRepository>();
-            var service = new UserService(userRepository, passwordTokenRepository, websiteRepository, authOptions);
+            var service = new UserService(userRepository, passwordTokenRepository, websiteRepository, authOptions, sendgridOptions);
 
             A.CallTo(() => userRepository.Edit(A<User>.Ignored)).Returns(new User());
             A.CallTo(() => userRepository.GetById(A<Guid>.Ignored)).Returns(new User() { Id = new Guid("83A9E26C-07B1-4821-B4A3-56CA06EBF4C7"), Salt = new byte[] { 1 } });
@@ -85,8 +88,9 @@ namespace LiveChat.UnitTests.Business
             var passwordTokenRepository = A.Fake<IPasswordChangeTokenRepository>();
             var userRepository = A.Fake<IUserRepository>();
             var authOptions = A.Fake<IOptions<AuthOptions>>();
+            var sendgridOptions = A.Fake<IOptions<SendgridOptions>>();
             var websiteRepository = A.Fake<IWebsiteRepository>();
-            var service = new UserService(userRepository, passwordTokenRepository, websiteRepository, authOptions);
+            var service = new UserService(userRepository, passwordTokenRepository, websiteRepository, authOptions, sendgridOptions);
 
             A.CallTo(() => userRepository.GetByEmail(A<string>.Ignored)).Returns(user);
             A.CallTo(() => userRepository.Delete(A<Guid>.Ignored)).DoesNothing();
@@ -103,8 +107,9 @@ namespace LiveChat.UnitTests.Business
             var passwordTokenRepository = A.Fake<IPasswordChangeTokenRepository>();
             var userRepository = A.Fake<IUserRepository>();
             var authOptions = A.Fake<IOptions<AuthOptions>>();
+            var sendgridOptions = A.Fake<IOptions<SendgridOptions>>();
             var websiteRepository = A.Fake<IWebsiteRepository>();
-            var service = new UserService(userRepository, passwordTokenRepository, websiteRepository, authOptions);
+            var service = new UserService(userRepository, passwordTokenRepository, websiteRepository, authOptions, sendgridOptions);
 
             A.CallTo(() => websiteRepository.GetByUrl(A<string>.Ignored)).Returns(new Website());
             //act
@@ -120,8 +125,9 @@ namespace LiveChat.UnitTests.Business
             var passwordTokenRepository = A.Fake<IPasswordChangeTokenRepository>();
             var userRepository = A.Fake<IUserRepository>();
             var authOptions = A.Fake<IOptions<AuthOptions>>();
+            var sendgridOptions = A.Fake<IOptions<SendgridOptions>>();
             var websiteRepository = A.Fake<IWebsiteRepository>();
-            var service = new UserService(userRepository, passwordTokenRepository, websiteRepository, authOptions);
+            var service = new UserService(userRepository, passwordTokenRepository, websiteRepository, authOptions, sendgridOptions);
 
             LoginModel login = new LoginModel() {Email ="", Password= "1" };
 
@@ -153,7 +159,8 @@ namespace LiveChat.UnitTests.Business
             var userRepository = A.Fake<IUserRepository>();
             var websiteRepository = A.Fake<IWebsiteRepository>();
             IOptions<AuthOptions> options = _provider.GetService<IOptions<AuthOptions>>();
-            var service = new UserService(userRepository, passwordTokenRepository, websiteRepository, options);
+            var sendgridOptions = A.Fake<IOptions<SendgridOptions>>();
+            var service = new UserService(userRepository, passwordTokenRepository, websiteRepository, options, sendgridOptions);
             var Id = new Guid();
 
             A.CallTo(() => websiteRepository.GetById(A<Guid>.Ignored)).Returns(new Website() { WebsiteUrl="test"});

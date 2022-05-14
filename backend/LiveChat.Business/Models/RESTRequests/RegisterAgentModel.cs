@@ -17,5 +17,6 @@ namespace LiveChat.Business.Models.RESTRequests
         public string Email { get; set; }
 
         public Guid WebsiteId { get; set; }
+        public string baseUrl { get; set; }
     }
 }

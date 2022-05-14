@@ -4,7 +4,7 @@ using LiveChat.Business.Models.RESTResponces;
 using LiveChat.Data.Entities;
 using System;
 using System.Collections.Generic;
-
+using System.Threading.Tasks;
 
 namespace LiveChat.Business.Services.Interfaces
 {
@@ -15,7 +15,7 @@ namespace LiveChat.Business.Services.Interfaces
 
     Guid RegisterAdmin(RegisterModel login);
     
-    Guid RegisterAgent(RegisterAgentModel login);
+    Task<Guid> RegisterAgent(RegisterAgentModel login);
 
     Guid CompleteRegisterAgent(CompleteRegisterAgent login);
     bool HasUser(string email);

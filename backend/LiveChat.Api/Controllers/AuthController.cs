@@ -60,7 +60,7 @@ namespace LiveChat.Api.Controllers
         //использован единожды. Позволяет пользователю установить новый пароль
         [HttpPost("sign-up-agent")]
         [Authorize(Roles = Roles.Admin)]
-        public IActionResult SignUpAgent(RegisterAgentModel register)
+        public IActionResult SignUpAgentAsync(RegisterAgentModel register, string baseUrl)
         {
             var websiteId = User.FindAll("websiteId").Select(x => x.Value).FirstOrDefault();
             register.WebsiteId =new Guid(websiteId);
@@ -76,7 +76,7 @@ namespace LiveChat.Api.Controllers
             var userId = _userService.RegisterAgent(register);
             return Ok(new
             {
-                userId = userId
+                userId = userId.Result
             });
         }
 

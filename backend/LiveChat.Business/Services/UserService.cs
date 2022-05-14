@@ -8,6 +8,10 @@ using LiveChat.Data.Entities;
 using LiveChat.Data.Repositories.Interfaces;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+
+using SendGrid;
+using SendGrid.Helpers.Mail;
+
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -15,7 +19,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-
+using System.Threading.Tasks;
 
 namespace LiveChat.Business.Services
 {
@@ -25,14 +29,16 @@ namespace LiveChat.Business.Services
         private readonly IUserRepository _userRepository;
         private readonly IWebsiteRepository _websiteRepository;
         private readonly IOptions<AuthOptions> _authOptions;
+        private readonly IOptions<SendgridOptions> _sendgridOptions;
         private readonly SHA1 _sha1 = SHA1.Create();
         private readonly RNGCryptoServiceProvider _secureRandom = new RNGCryptoServiceProvider();
-        public UserService(IUserRepository userRepository, IPasswordChangeTokenRepository passwordTokenRepository, IWebsiteRepository websiteRepository, IOptions<AuthOptions> authOptions)
+        public UserService(IUserRepository userRepository, IPasswordChangeTokenRepository passwordTokenRepository, IWebsiteRepository websiteRepository, IOptions<AuthOptions> authOptions, IOptions<SendgridOptions> sendgridOptions)
         {
             _userRepository = userRepository;
             _passwordTokenRepository = passwordTokenRepository;
             _websiteRepository = websiteRepository;
             _authOptions = authOptions;
+            _sendgridOptions = sendgridOptions;
         }
         private byte[] ComputePasswordHash(string password, IEnumerable<byte> salt)
         {
@@ -64,7 +70,7 @@ namespace LiveChat.Business.Services
             return user.Id;
         }
 
-        public Guid RegisterAgent(RegisterAgentModel register)
+        public async Task<Guid> RegisterAgent(RegisterAgentModel register)
         {
             var user = new User();
            // var websiteId = _websiteRepository.GetAllWebsites().SingleOrDefault(x => x.WebsiteUrl == register.WebsiteUrl).Id;
@@ -75,7 +81,7 @@ namespace LiveChat.Business.Services
             user.Salt = CreateSalt();
             user.PasswordHash = new byte[0];
 
-           user= _userRepository.Add(user);
+           user = _userRepository.Add(user);
             //В базе данных создается токен
             //Параметр ExpirationDate определяет дату, после которой регистрация агента будет невозможна
             //Параметр IsExpired получает значение true после того, как токен был использован
@@ -86,11 +92,16 @@ namespace LiveChat.Business.Services
             token.UserId = user.Id;
             token.ExpirationDate = DateTime.Now.AddMinutes(60);
             token.IsExpired = false;
-
             _passwordTokenRepository.Add(token);
-            //return token.Id;
+
+            if (register.Email != null)
+            {
+                await SendEmail(register.Email, register.baseUrl + token.Id);
+            }
+
             return user.Id;
         }
+
         public Guid CompleteRegisterAgent(CompleteRegisterAgent complete)
         {
             var verificationToken = _passwordTokenRepository.GetById(complete.invitationCode);
@@ -105,6 +116,7 @@ namespace LiveChat.Business.Services
             }
             else return Guid.Empty;
         }
+
         public string GenerateJwt(Guid userId)
         {
             var user = _userRepository.GetById(userId);
@@ -125,14 +137,12 @@ namespace LiveChat.Business.Services
           new Claim("role", user.Role),
           new Claim("websiteId",user.WebsiteId.ToString()),
           new Claim("websiteUrl",websiteUrl)
-          
               },
               expires: DateTime.Now.AddSeconds(authOptions.TokenLifetime),     
               signingCredentials: credentials);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
-
 
         //проверка наличия пользователя в базе данных 
         //если он есть, но он не подтвердил свой аккаунт в течении дозволенного времени
@@ -150,8 +160,7 @@ namespace LiveChat.Business.Services
             }
             else return true;
         }
-        
-       
+
         public bool HasWebsite(string url)
         {
             return _websiteRepository.GetByUrl(url) != null;
@@ -168,6 +177,18 @@ namespace LiveChat.Business.Services
             return isPasswordValid ? user.Id : null;
         }
 
-      
+        private async Task<Response> SendEmail(string receiverEmail, string link)
+        {
+            string apiKey = _sendgridOptions.Value.SendgridApiKey;
+            var client = new SendGridClient(apiKey);
+            var from = new EmailAddress(_sendgridOptions.Value.SenderEmail, _sendgridOptions.Value.SenderName);
+            var subject = _sendgridOptions.Value.Subject;
+            var to = new EmailAddress(receiverEmail, _sendgridOptions.Value.ReceiverName);
+            var plainTextContent = _sendgridOptions.Value.PlainTextContent;
+            var htmlContent = _sendgridOptions.Value.HtmlContent.Replace("{link}", link);
+            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+            return await client.SendEmailAsync(msg);
+        }
+
     }
 }
