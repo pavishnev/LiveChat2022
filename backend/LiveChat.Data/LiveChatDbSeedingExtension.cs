@@ -32,8 +32,8 @@ namespace LiveChat.Data
                     new User
                     {
                         Id = Guid.NewGuid(),
-                        Name = "Aboba",
-                        Email = "aboba@yopmail.com",
+                        Name = "John Snow",
+                        Email = "aliveadmin@yopmail.com",
                         Role = Roles.Admin,
                         WebsiteId = Guid.Parse("8dea0b6d-c6cc-4189-acde-eada87c16b9a"),
                         PasswordHash = new byte[20]
@@ -60,8 +60,22 @@ namespace LiveChat.Data
                        new User
                     {
                         Id = Guid.NewGuid(),
-                        Name = "Svitlana1",
-                        Email = "svitlana1@yopmail.com",
+                        Name = "Regina",
+                        Email = "regina@yopmail.com",
+                        Role = Roles.Agent,
+                        WebsiteId = Guid.Parse("8dea0b6d-c6cc-4189-acde-eada87c16b9a"),
+                        PasswordHash = new byte[20]
+                        {
+                            102, 93, 212, 110, 29, 2, 252, 154, 103, 211, 16, 185, 159, 44, 146, 52, 174, 44, 155, 222
+                        },
+                        Salt = new byte[8] {190, 232, 70, 32, 53, 73, 76, 154},
+                        //password = 1
+                    },
+                       new User
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "Alexey",
+                        Email = "alexey@yopmail.com",
                         Role = Roles.Agent,
                         WebsiteId = Guid.Parse("8dea0b6d-c6cc-4189-acde-eada87c16b9a"),
                         PasswordHash = new byte[20]
@@ -84,7 +98,7 @@ namespace LiveChat.Data
                     new Website
                     {
                         Id = new Guid("8dea0b6d-c6cc-4189-acde-eada87c16b9a"),
-                        WebsiteUrl = "www.aboba.com"
+                        WebsiteUrl = "www.aliveadmin.com"
                     }
                 });
             }

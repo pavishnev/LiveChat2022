@@ -10,19 +10,18 @@ import { MatCardModule } from "@angular/material/card";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SESSION_TOKEN } from './services/auth.service';
 import { environment } from 'src/environments/environment';
 import { JwtModule } from '@auth0/angular-jwt';
+import { TokenInterceptor } from './interceptors/token.interceptor';
 
 function tokenGetter(): string|null { 
   return localStorage.getItem(SESSION_TOKEN);
 }
 
 @NgModule({
-  declarations: [
-    ChatComponent
-  ],
+  declarations: [ChatComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -35,12 +34,18 @@ function tokenGetter(): string|null {
     JwtModule.forRoot({
       config: {
         tokenGetter,
-        allowedDomains: environment.allowedApiDomainsAuth
-      }
-    })
+        allowedDomains: environment.allowedApiDomainsAuth,
+      },
+    }),
   ],
-  providers: [],
-  entryComponents: [ChatComponent]
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true,
+    },
+  ],
+  entryComponents: [ChatComponent],
 })
 export class AppModule {
   constructor(private _injector: Injector) {}

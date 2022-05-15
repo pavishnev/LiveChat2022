@@ -63,18 +63,18 @@ namespace LiveChat.Api.Properties {
         /// <summary>
         ///   Looks up a localized string similar to (()=&gt;{&quot;use strict&quot;;var r,e={},t={};function n(r){var o=t[r];if(void 0!==o)return o.exports;var a=t[r]={exports:{}};return e[r](a,a.exports,n),a.exports}n.m=e,r=[],n.O=(e,t,o,a)=&gt;{if(!t){var l=1/0;for(f=0;f&lt;r.length;f++){for(var[t,o,a]=r[f],i=!0,u=0;u&lt;t.length;u++)(!1&amp;a||l&gt;=a)&amp;&amp;Object.keys(n.O).every(r=&gt;n.O[r](t[u]))?t.splice(u--,1):(i=!1,a&lt;l&amp;&amp;(l=a));i&amp;&amp;(r.splice(f--,1),e=o())}return e}a=a||0;for(var f=r.length;f&gt;0&amp;&amp;r[f-1][2]&gt;a;f--)r[f]=r[f-1];r[f]=[t,o,a]},n.n=r=&gt;{var e=r&amp;&amp;r.__esModule?()=&gt;r.default:()=&gt;r;r [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string Chat_Script {
+        internal static string chat_script {
             get {
-                return ResourceManager.GetString("Chat Script", resourceCulture);
+                return ResourceManager.GetString("chat_script", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to @import url(https://fonts.googleapis.com/icon?family=Material+Icons);.mat-badge-content{font-weight:600;font-size:12px;font-family:Roboto,Helvetica Neue,sans-serif}.mat-badge-small .mat-badge-content{font-size:9px}.mat-badge-large .mat-badge-content{font-size:24px}.mat-h1,.mat-headline,.mat-typography h1{font:400 24px/32px Roboto,Helvetica Neue,sans-serif;letter-spacing:normal;margin:0 0 16px}.mat-h2,.mat-title,.mat-typography h2{font:500 20px/32px Roboto,Helvetica Neue,sans-serif;letter-spacing:normal;marg [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string Chat_Styles {
+        internal static string styles {
             get {
-                return ResourceManager.GetString("Chat Styles", resourceCulture);
+                return ResourceManager.GetString("styles", resourceCulture);
             }
         }
     }

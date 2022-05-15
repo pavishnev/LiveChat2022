@@ -4,8 +4,6 @@
 
 export const environment = {
   production: false,
-  //apiUrl: 'https://livechat2021api.azurewebsites.net/api',
-  //allowedApiDomainsAuth: ['https://livechat2021api.azurewebsites.net']
   apiUrl: 'https://localhost:5001/api',
   allowedApiDomainsAuth: ['localhost:5001']
 };

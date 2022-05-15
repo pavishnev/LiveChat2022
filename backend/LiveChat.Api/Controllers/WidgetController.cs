@@ -26,13 +26,13 @@ namespace LiveChat.Api.Controllers
         [HttpGet("chat-script")]
         public IActionResult GetChatScript()
         { 
-            return Content(Properties.Resources.Chat_Script, "text/javascript");
+            return Content(Properties.Resources.chat_script, "text/javascript");
         }
 
         [HttpGet("chat-styles")]
         public IActionResult GetChatStyles()
         {
-            return Content(Properties.Resources.Chat_Styles, "text/css");
+            return Content(Properties.Resources.styles, "text/css");
         }
         [HttpGet("chat-widget")]
         [Authorize(Roles = Roles.Admin)]

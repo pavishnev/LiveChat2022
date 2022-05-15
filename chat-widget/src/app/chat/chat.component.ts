@@ -79,8 +79,10 @@ export class ChatComponent implements OnInit {
   sendName(name: string) {
     this.isTokenReceived = true;
     this.client.Name=name;
-    this._authService.startSession(this.client);
-    this.client.Id=this._authService.decodeUserToken();
+    this._authService.startSession(this.client).subscribe((val)=>{
+      this.client.Id = this._authService.decodeUserToken();
+    })
+    
   }
 
   sendMessage(message: string, date: string)
@@ -102,8 +104,7 @@ export class ChatComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.websiteId);
     this.client.WebsiteId = this.websiteId;
-    if(this._authService.isUserAuthorizedGetter)
-    {
+    if (this._authService.isUserAuthorizedGetter) {
       this._signalRService.startConnection();
     }
 

@@ -54,7 +54,7 @@ namespace LiveChat.UnitTests.Business
             RegisterAgentModel register = new RegisterAgentModel() { Email = "test email" };
 
             //act
-            var result = service.RegisterAgent(register);
+            var result = service.RegisterAgent(register).Result;
             //assert
             Assert.NotEqual(result, new Guid());
         }
