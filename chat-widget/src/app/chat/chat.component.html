@@ -8,10 +8,17 @@
   </div>
 
   <div class="body">
-    <div class="chat-status">
+    <!-- <div class="chat-status">
       Chat Started
-    </div>
-
+    </div> -->
+  <div [ngClass]="
+       {
+       'message': true,
+       'agent': true
+       }">
+      <p class="text">Thanks for using us. Please describe your problem and we'll answer you as soon as possible</p>
+      <p class="date">{{this.pipe.transform(getDateTimeNow(), 'short')}}</p>
+   </div>
     <div *ngFor="let message of received"
          [ngClass]="
        {
@@ -24,9 +31,9 @@
       <p class="date">{{this.pipe.transform(message.timestamp, 'short')}}</p>
     </div>
 
-    <div class="chat-status">
+    <!-- <div class="chat-status">
       Chat Ended
-    </div>
+    </div> -->
   </div>
 
   <div class="footer">

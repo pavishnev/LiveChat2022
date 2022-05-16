@@ -85,6 +85,10 @@ export class ChatComponent implements OnInit {
     
   }
 
+  getDateTimeNow(){
+    return new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+  }
+
   sendMessage(message: string, date: string)
   {
     let messageModel: MessageModel = new MessageModel();
