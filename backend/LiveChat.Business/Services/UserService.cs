@@ -177,7 +177,7 @@ namespace LiveChat.Business.Services
             return isPasswordValid ? user.Id : null;
         }
 
-        private async Task<Response> SendEmail(string receiverEmail, string link)
+        public async Task<Response> SendEmail(string receiverEmail, string link)
         {
             string apiKey = _sendgridOptions.Value.SendgridApiKey;
             var client = new SendGridClient(apiKey);

@@ -6,11 +6,10 @@ import { ChatCardComponent } from './layouts/admin-layout/chats-history/chat-car
 import { WidgetComponent } from './layouts/admin-layout/widget/widget.component';
 import { ChatsHistoryComponent } from './layouts/admin-layout/chats-history/chats-history.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
-import { NgModule, Component } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ChatComponent } from "./chat/chat.component";
+import { ChatComponent } from "./layouts/agent-layout/chat/chat.component";
 import { AuthComponent } from "./auth/auth.component";
-import { ChatsComponent } from "./chats/chats.component";
 import { ErrorComponent } from "./error/error.component";
 import { RouteGuardService } from './services/route-guard.service';
 

@@ -3,13 +3,23 @@ using LiveChat.Business.Commons;
 using LiveChat.Business.Models;
 using LiveChat.Business.Models.RESTRequests;
 using LiveChat.Business.Services;
+using LiveChat.Business.Services.Interfaces;
 using LiveChat.Data.Entities;
 using LiveChat.Data.Repositories.Interfaces;
+
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+
+using SendGrid;
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
+
 using Xunit;
 
 namespace LiveChat.UnitTests.Business
@@ -47,11 +57,16 @@ namespace LiveChat.UnitTests.Business
             var sendgridOptions = A.Fake<IOptions<SendgridOptions>>();
             var websiteRepository = A.Fake<IWebsiteRepository>();
             var service = new UserService(userRepository, passwordTokenRepository, websiteRepository, authOptions, sendgridOptions);
+            //var service = A.Fake<IUserService>();
 
+           // A.CallTo(() => service.SendEmail(A<string>.Ignored, A<string>.Ignored))
+            //     .Returns(A.Fake<Task<Response>>());
+                 //.MustHaveHappened();
             A.CallTo(() => websiteRepository.Add(A<Website>.Ignored)).Returns(new Website());
             A.CallTo(() => userRepository.Add(A<User>.Ignored)).Returns(new User() { Id = new Guid("83A9E26C-07B1-4821-B4A3-56CA06EBF4C7") });
             A.CallTo(() => passwordTokenRepository.Add(A<PasswordChangeToken>.Ignored)).Returns(new PasswordChangeToken());
-            RegisterAgentModel register = new RegisterAgentModel() { Email = "test email" };
+            A.CallTo(() => sendgridOptions.Value).Returns(new SendgridOptions() { SendgridApiKey = "some key", HtmlContent = "{link}" });
+            RegisterAgentModel register = new RegisterAgentModel() { Email = "test email", baseUrl = "url"};
 
             //act
             var result = service.RegisterAgent(register).Result;

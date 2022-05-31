@@ -9,14 +9,13 @@ import { FormsModule } from '@angular/forms';
 
 // Components
 import { AppComponent } from './app.component';
-import { ChatComponent } from './chat/chat.component';
+import { ChatComponent } from './layouts/agent-layout/chat/chat.component';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { ChatCardComponent } from './layouts/admin-layout/chats-history/chat-card/chat-card.component';
 import { ChatsHistoryComponent } from './layouts/admin-layout/chats-history/chats-history.component';
 import { AuthComponent } from './auth/auth.component';
-import { ChatsComponent } from './chats/chats.component';
 import { ErrorComponent } from './error/error.component';
 import { AgentsManagementComponent } from './layouts/admin-layout/agents-management/agents-management.component';
 import { AddAgentComponent } from './layouts/admin-layout/agents-management/add-agent/add-agent.component';
@@ -61,7 +60,6 @@ export function tokenGetter(): string|null {
     LoginComponent,
     RegisterComponent,
     AuthComponent,
-    ChatsComponent,
     AdminLayoutComponent,
     ChatsHistoryComponent,
     ChatCardComponent,

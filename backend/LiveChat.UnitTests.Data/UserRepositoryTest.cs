@@ -50,7 +50,7 @@ namespace LiveChat.UnitTests.Data
             var user = new User()
             {
                 Id = new Guid("83A9E26C-07B1-4821-B4A3-56CA06EBF4C7"),
-                Email = "c"
+                Email = "example@yopmail.com"
             };
             _context.Users.AddRange(user);
             _context.SaveChanges();
