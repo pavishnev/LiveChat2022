@@ -125,6 +125,7 @@ namespace LiveChat.Api
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ISessionRepository, SessionRepository>();
             services.AddScoped<IChatLogRepository, ChatLogRepository>();
+            services.AddScoped<IStatisticsRepository, StatisticsRepository>();
 
             services.AddSwaggerGen(c =>
             {

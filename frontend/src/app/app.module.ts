@@ -38,8 +38,9 @@ import { MatInputModule } from "@angular/material/input";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatSidenavModule } from "@angular/material/sidenav";
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from "@angular/material/select";
-import { MatOptionModule } from "@angular/material/core";
+import { MatNativeDateModule, MatOptionModule } from "@angular/material/core";
 import { MatListModule } from "@angular/material/list";
 import { MatTabsModule } from "@angular/material/tabs";
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -47,7 +48,13 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import {MatDialogModule} from '@angular/material/dialog';
 import { TokenInterceptor } from './interceptors/token.interceptor';
+import { StatisticsComponent } from './layouts/admin-layout/statistics/statistics.component';
 ///
+
+import * as PlotlyJS from 'plotly.js-dist-min';
+import { PlotlyModule } from 'angular-plotly.js';
+
+PlotlyModule.plotlyjs = PlotlyJS;
 
 export function tokenGetter(): string|null {
    return localStorage.getItem(ACCESS_TOKEN_KEY)
@@ -64,6 +71,7 @@ export function tokenGetter(): string|null {
     ChatsHistoryComponent,
     ChatCardComponent,
     WidgetComponent,
+    StatisticsComponent,
     AgentsManagementComponent,
     AddAgentComponent,
     ViewAgentComponent,
@@ -93,7 +101,9 @@ export function tokenGetter(): string|null {
     MatListModule,
     MatTabsModule,
     MatDialogModule,
-    
+    MatNativeDateModule,
+    MatDatepickerModule,
+    PlotlyModule,
     FormsModule,
     JwtModule.forRoot({
       config: {

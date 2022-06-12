@@ -1,3 +1,4 @@
+import { StatisticsComponent } from './layouts/admin-layout/statistics/statistics.component';
 import { InviteComponent } from './auth/invite/invite.component';
 import { ViewAgentComponent } from './layouts/admin-layout/agents-management/view-agent/view-agent.component';
 import { AddAgentComponent } from './layouts/admin-layout/agents-management/add-agent/add-agent.component';
@@ -13,40 +14,42 @@ import { AuthComponent } from "./auth/auth.component";
 import { ErrorComponent } from "./error/error.component";
 import { RouteGuardService } from './services/route-guard.service';
 
-export const adminRoutes: Routes=[     
-            {
-                path: '',
-                redirectTo: "admin/chats-history",
-                pathMatch: 'full'
-            }, 
-            {
-                path: 'chats-history', 
-                component: ChatsHistoryComponent
-                
-            },
-            {
-                path: 'chats-history/:id',
-                //outlet: 'admin-layout',
-                component: ChatCardComponent
-            },
-            {
-                path: 'widget',
-                component: WidgetComponent
-            },
-            {
-                path: 'agents-management',
-                component: AgentsManagementComponent
-            },
-            {
-                path: 'agents-management/add-agent',
-                component: AddAgentComponent
-            },
-             {
-                path: 'agents-management/:id',
-                component: ViewAgentComponent
-            },
-         
-        ];
+export const adminRoutes: Routes = [
+  {
+    path: '',
+    redirectTo: 'admin/chats-history',
+    pathMatch: 'full',
+  },
+  {
+    path: 'statistics',
+    component: StatisticsComponent,
+  },
+  {
+    path: 'chats-history',
+    component: ChatsHistoryComponent,
+  },
+  {
+    path: 'chats-history/:id',
+    //outlet: 'admin-layout',
+    component: ChatCardComponent,
+  },
+  {
+    path: 'widget',
+    component: WidgetComponent,
+  },
+  {
+    path: 'agents-management',
+    component: AgentsManagementComponent,
+  },
+  {
+    path: 'agents-management/add-agent',
+    component: AddAgentComponent,
+  },
+  {
+    path: 'agents-management/:id',
+    component: ViewAgentComponent,
+  },
+];
 
 export const routes: Routes = [
   { path: '', redirectTo: "/auth", pathMatch: 'full' },

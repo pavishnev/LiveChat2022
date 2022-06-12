@@ -1,0 +1,11 @@
+.wrapper {
+  background-color: white;
+  border: 1px solid black;
+  width: 75%;
+  margin: 1rem auto;
+  display:flex;
+  flex-wrap:wrap;
+}
+.align-r{
+  margin: 10px;
+}

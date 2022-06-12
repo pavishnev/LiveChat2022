@@ -1,0 +1,17 @@
+
+    <mat-card class="header-cell">
+     <mat-form-field appearance="outline">
+       <mat-label>Enter a date range</mat-label>
+       <mat-date-range-input [rangePicker]="picker">
+         <input matStartDate [formControl]="startDate" placeholder="Start date">
+         <input matEndDate [formControl]="endDate" placeholder="End date">
+       </mat-date-range-input>
+       <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+       <mat-date-range-picker #picker></mat-date-range-picker>
+     </mat-form-field>
+      <button mat-raised-button color="primary" class="align-r button">Apply</button>
+    </mat-card>
+    <div class="wrapper">
+<plotly-plot *ngFor="let plot of plots" [data]="plot.data" [layout]="plot.layout"></plotly-plot>
+</div>
