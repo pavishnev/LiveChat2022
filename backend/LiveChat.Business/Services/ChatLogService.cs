@@ -46,7 +46,7 @@ namespace LiveChat.Business.Services
                 chatLogs.Add(chatLogViewModel);
             }
 
-            return chatLogs;
+            return chatLogs.OrderBy(x => x.Timestamp).ToList();
         }
 
         public int GetSessionsCount(Guid websiteId)

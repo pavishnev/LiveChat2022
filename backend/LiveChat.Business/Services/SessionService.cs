@@ -158,7 +158,7 @@ namespace LiveChat.Business.Services
         }
         public bool IsSessionInTheWaitingList(Guid id)
         {
-            return waitingList.Any(X509EncryptingCredentials => X509EncryptingCredentials.Id == id);
+            return waitingList.Any(x => x.Id == id);
         }
     }
 }

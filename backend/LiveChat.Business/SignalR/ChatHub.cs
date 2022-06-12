@@ -36,18 +36,21 @@ namespace LiveChat.Business.SignalR
             Console.WriteLine(JsonSerializer.Serialize(msg));
             try
             {
+                if (_sessionService.SessionIsActive(Guid.Parse(msg.SessionId)))
+                {
                 var agentId = Context.User.FindFirstValue(ClaimTypes.NameIdentifier);
                 Clients.User(msg.SessionId).SendAsync("Receive", msg);
                 
                 ChatLog chatLog = new ChatLog();
                 chatLog.Message = msg.Text;
                 chatLog.IsSentByClient = msg.IsSentByClient;
-                chatLog.Timestamp = msg.Timestamp;
+                chatLog.Timestamp = DateTime.Now;
 
                 chatLog.UserId = _sessionService.GetAgentIdBySessionId(Guid.Parse(msg.SessionId));
                 chatLog.SessionId = Guid.Parse(msg.SessionId);
 
                 _chatLogRepository.Add(chatLog);
+                }
             }
             catch (Exception ex)
             {
@@ -82,7 +85,7 @@ namespace LiveChat.Business.SignalR
                     ChatLog chatLog = new ChatLog();
                     chatLog.Message = msg.Text;
                     chatLog.IsSentByClient = msg.IsSentByClient;
-                    chatLog.Timestamp = msg.Timestamp;
+                    chatLog.Timestamp = DateTime.Now;
 
                     chatLog.UserId = _sessionService.GetAgentIdBySessionId(Guid.Parse(msg.SessionId));
                     chatLog.SessionId = Guid.Parse(msg.SessionId);

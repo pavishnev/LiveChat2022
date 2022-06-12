@@ -52,7 +52,7 @@ export class ChatComponent implements OnInit {
       localStorage.setItem('chats', JSON.stringify(this.chats));
     });
 
-    interval(60000).subscribe(() => {
+    interval(6000).subscribe(() => {
       this._chatRemover.refreshChatsList();
     })
 

@@ -86,7 +86,7 @@ export class ChatComponent implements OnInit {
   }
 
   getDateTimeNow(){
-    return new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+    return new Date();
   }
 
   sendMessage(message: string, date: string)
@@ -96,7 +96,7 @@ export class ChatComponent implements OnInit {
     messageModel.text = message;
     messageModel.isSentByClient = true;
 
-    messageModel.timestamp = new Date((new Date()).getTime() + 24*60*60*1000);
+    messageModel.timestamp = new Date();
 
     this.input.nativeElement.value = '';
 

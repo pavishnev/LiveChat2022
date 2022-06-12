@@ -130,7 +130,7 @@ namespace LiveChat.Data
                         Id = new Guid("e7763b9d-1b28-4670-b8cc-d5445db2315e"),
                         ClientName = "Sergey",
                         StartedAt=DateTime.Now,
-                        EndedAt=null,
+                        EndedAt=DateTime.Now.AddMinutes(30),
                         WebsiteId=new Guid("8dea0b6d-c6cc-4189-acde-eada87c16b9a")
                     }
                 });
