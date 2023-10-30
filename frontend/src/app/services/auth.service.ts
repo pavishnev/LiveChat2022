@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { AnySoaRecord } from 'dns';
 import { Observable, Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';

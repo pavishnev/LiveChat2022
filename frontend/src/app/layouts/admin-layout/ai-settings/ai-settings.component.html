@@ -1,0 +1,14 @@
+<div class="wrapper">
+  <mat-card class="header-cell">
+    <h1><b>Put your context here</b></h1>
+    <mat-form-field appearance="outline" class="textarea">
+      <mat-label>Put here your context</mat-label>
+      <textarea matInput [(ngModel)]="context" [disabled]="textAreaLock">{{context}}</textarea>
+    </mat-form-field>
+    <button *ngIf="textAreaLock" mat-raised-button color="primary" class="align-r button" (click)="unlockTextarea()">Edit</button>
+    <button *ngIf="!textAreaLock" mat-raised-button color="primary" class="align-r button" (click)="saveContext()">Save</button>
+    <button *ngIf="!textAreaLock" mat-raised-button color="warn" class="align-r button" (click)="unlockTextarea()">Cancel</button>
+  </mat-card>
+  <div class="mat-elevation-z8">
+  </div>
+</div>  

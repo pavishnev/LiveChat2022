@@ -2,9 +2,8 @@ import { ChatsHistoryService } from './../../../../services/chats-history.servic
 
 import { partitionArray } from '@angular/compiler/src/util';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router} from '@angular/router';
-import { time } from 'console';
-import {Subscription} from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { MessageModel } from 'src/app/models/message.model';
 @Component({
@@ -18,7 +17,7 @@ export class ChatCardComponent implements OnInit {
   //must be given here through route parameters
   //on Component init, will send get request with id and initialize all the other fields
   messagesArchive: MessageModel[] = []; //архив сообщений
-  searchText:string = "";
+  searchText: string = "";
   sessionId!: string;
 
   agentName!: string;
@@ -46,16 +45,16 @@ export class ChatCardComponent implements OnInit {
     this.router.navigate(['admin/chats-history']);
   }
 
-  public getFilteredMessagesArchive(){
+  public getFilteredMessagesArchive() {
     return this.messagesArchive.filter((elem) =>
       elem.text.includes(this.searchText)
     );
   }
-  public clearSearch(){
+  public clearSearch() {
     this.searchText = ""
   }
 
-  public sendMessage(message: string) {}
+  public sendMessage(message: string) { }
   ngOnInit() {
     this.chatsHistoryService
       .getChatHistory(this.sessionId)

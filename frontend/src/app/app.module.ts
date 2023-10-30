@@ -46,12 +46,15 @@ import { MatTabsModule } from "@angular/material/tabs";
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
-import {MatDialogModule} from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { TokenInterceptor } from './interceptors/token.interceptor';
+import { AiSettingsComponent } from './layouts/admin-layout/ai-settings/ai-settings.component';
+import { AngularFileUploaderModule } from "angular-file-uploader";
+
 ///
 
-export function tokenGetter(): string|null {
-   return localStorage.getItem(ACCESS_TOKEN_KEY)
+export function tokenGetter(): string | null {
+  return localStorage.getItem(ACCESS_TOKEN_KEY)
 }
 
 @NgModule({
@@ -72,6 +75,7 @@ export function tokenGetter(): string|null {
     DialogOverviewExampleDialog,
     InviteComponent,
     ErrorComponent,
+    AiSettingsComponent
   ],
   imports: [
     AppRoutingModule,
@@ -95,7 +99,7 @@ export function tokenGetter(): string|null {
     MatListModule,
     MatTabsModule,
     MatDialogModule,
-    
+    AngularFileUploaderModule,
     FormsModule,
     JwtModule.forRoot({
       config: {
@@ -114,4 +118,4 @@ export function tokenGetter(): string|null {
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

@@ -20,25 +20,23 @@ import { AgentsAuthService } from 'src/app/services/agents-auth.service';
   templateUrl: './agents-management.component.html',
   styleUrls: ['./agents-management.component.css']
 })
-export class AgentsManagementComponent implements OnInit,AfterViewInit {
+export class AgentsManagementComponent implements OnInit, AfterViewInit {
 
- tableContent: AgentsTableElement[]=[];
- dataSource = new MatTableDataSource<AgentsTableElement>(this.tableContent);
+  tableContent: AgentsTableElement[] = [];
+  dataSource = new MatTableDataSource<AgentsTableElement>(this.tableContent);
   constructor(private route: ActivatedRoute,
-               private router: Router,
-               private agentsAuthService:AgentsAuthService   ) { }
- 
+    private router: Router,
+    private agentsAuthService: AgentsAuthService) { }
 
- ngOnInit() {
-    this.agentsAuthService.getAllAgents().subscribe(agentsItems=>{      
-       this.tableContent = agentsItems;
-       this.dataSource = new MatTableDataSource<AgentsTableElement>(this.tableContent);
-        this.dataSource.paginator = this.paginator;
+  ngOnInit() {
+    this.agentsAuthService.getAllAgents().subscribe(agentsItems => {
+      this.tableContent = agentsItems;
+      this.dataSource = new MatTableDataSource<AgentsTableElement>(this.tableContent);
+      this.dataSource.paginator = this.paginator;
     })
 
   }
-  displayedColumns: string[] = [ 'name', 'email', 'status'];
-
+  displayedColumns: string[] = ['name', 'email', 'status'];
 
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;

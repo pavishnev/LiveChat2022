@@ -17,6 +17,7 @@ margin: 1rem 0 0 1rem;
 .back-button{
    width: 100%;
 }
+
 .flexbox {
   display: flex;
   flex-flow: row nowrap;
@@ -24,7 +25,6 @@ margin: 1rem 0 0 1rem;
   width: 100%;
   vertical-align:middle;
 }
-
 
 .spacer {
   display: flex;

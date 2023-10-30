@@ -13,76 +13,86 @@ import { AuthComponent } from "./auth/auth.component";
 import { ChatsComponent } from "./chats/chats.component";
 import { ErrorComponent } from "./error/error.component";
 import { RouteGuardService } from './services/route-guard.service';
+import { AiSettingsComponent } from './layouts/admin-layout/ai-settings/ai-settings.component';
 
-export const adminRoutes: Routes=[     
-            {
-                path: '',
-                redirectTo: "admin/chats-history",
-                pathMatch: 'full'
-            }, 
-            {
-                path: 'chats-history', 
-                component: ChatsHistoryComponent
-                
-            },
-            {
-                path: 'chats-history/:id',
-                //outlet: 'admin-layout',
-                component: ChatCardComponent
-            },
-            {
-                path: 'widget',
-                component: WidgetComponent
-            },
-            {
-                path: 'agents-management',
-                component: AgentsManagementComponent
-            },
-            {
-                path: 'agents-management/add-agent',
-                component: AddAgentComponent
-            },
-             {
-                path: 'agents-management/:id',
-                component: ViewAgentComponent
-            },
-         
-        ];
+export const adminRoutes: Routes = [
+  {
+    path: '',
+    redirectTo: "admin/chats-history",
+    pathMatch: 'full'
+  },
+  {
+    path: 'chats-history',
+    component: ChatsHistoryComponent
+
+  },
+  {
+    path: 'chats-history/:id',
+    //outlet: 'admin-layout',
+    component: ChatCardComponent
+  },
+  {
+    path: 'widget',
+    component: WidgetComponent
+  },
+  {
+    path: 'agents-management',
+    component: AgentsManagementComponent
+  },
+  {
+    path: 'agents-management/add-agent',
+    component: AddAgentComponent
+  },
+  {
+    path: 'agents-management/:id',
+    component: ViewAgentComponent
+  },
+  {
+    path: 'ai-settings',
+    component: AiSettingsComponent
+  },
+];
 
 export const routes: Routes = [
   { path: '', redirectTo: "/auth", pathMatch: 'full' },
   { path: 'complete-registration/:id', component: InviteComponent },
-  { path: 'auth',
-   component: AuthComponent,
-    data: { onlyAnonymous: true},
+  {
+    path: 'auth',
+    component: AuthComponent,
+    data: { onlyAnonymous: true },
     canActivate: [
       RouteGuardService
-    ],},
+    ],
+  },
 
-  { path: 'admin', 
-  component: AdminLayoutComponent, 
-  children:adminRoutes,
-      data: {
+  {
+    path: 'admin',
+    component: AdminLayoutComponent,
+    children: adminRoutes,
+    data: {
       onlyAuthorizedAdmin: true
     },
     canActivate: [
-      RouteGuardService
-    ],},
-    
-  { path: 'agent/chats', 
+      //  RouteGuardService
+    ],
+  },
+
+  {
+    path: 'agent/chats',
     component: ChatComponent,
     data: {
       onlyAuthorizedAgent: true
     },
     canActivate: [
       RouteGuardService
-    ],},
+    ],
+  },
   { path: '404', component: ErrorComponent },
   { path: '**', redirectTo: "/404" }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {useHash:true}) ],
+  imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
