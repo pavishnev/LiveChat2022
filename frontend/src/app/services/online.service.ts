@@ -1,14 +1,9 @@
 import { Injectable } from '@angular/core';
 
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { JWTtoken } from '../interfaces/JWTtoken.interface';
 import { ACCESS_TOKEN_KEY } from './auth.service';
-
-let headers = new HttpHeaders({
-  'Content-Type': 'application/json',
-  Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN_KEY)}`,
-});
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +14,7 @@ export class OnlineService {
 
   public addAgentOnline() {
     return this.httpClient
-      .get(`${this.apiUrl}/session/agent-online`, { headers: headers })
+      .get(`${this.apiUrl}/session/agent-online`)
       .subscribe(
         (val) => {
           console.log('Online agent added successfully');
@@ -32,7 +27,7 @@ export class OnlineService {
 
   public removeAgentOnline() {
     return this.httpClient
-      .get(`${this.apiUrl}/session/agent-offline`, { headers: headers })
+      .get(`${this.apiUrl}/session/agent-offline`)
       .subscribe(
         (val) => {
           console.log('Online agent removed successfully');

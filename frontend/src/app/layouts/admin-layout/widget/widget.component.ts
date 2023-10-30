@@ -23,7 +23,6 @@ export class WidgetComponent implements OnInit {
  jsCode!:string;
   ngOnInit() {
     this.widgetService.getWidgetCode().subscribe(data=>{
-      this.cssCode=data.cssCode;
       this.jsCode=data.jsCode;
     }, (error) =>{
        var ex = error.error;
