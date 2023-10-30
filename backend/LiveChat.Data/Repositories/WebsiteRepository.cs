@@ -30,6 +30,7 @@ namespace LiveChat.Data.Repositories
             if (toEdit != null)
             {
                 toEdit.WebsiteUrl = site.WebsiteUrl;
+                toEdit.AiContext = site.AiContext;
                 _context.Websites.Update(toEdit);
                 _context.SaveChanges();
             }

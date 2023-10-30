@@ -7,15 +7,17 @@ namespace LiveChat.Data
     {
         public LiveChatDbContext(DbContextOptions<LiveChatDbContext> options) : base(options)
         {
-            //Database.EnsureDeleted();
-            Database.EnsureCreated();
+
         }
+
         public DbSet<User> Users { get; set; }
 
         public DbSet<Website> Websites { get; set; }
 
         public DbSet<PasswordChangeToken> PasswordChangeTokens { get; set; }
+
         public DbSet<Session> Sessions { get; set; }
+
         public DbSet<ChatLog> ChatLogs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -29,6 +31,9 @@ namespace LiveChat.Data
                 .Property(a => a.WebsiteUrl);
 
             websiteModelBuilder
+                .Property(a => a.AiContext);
+
+            websiteModelBuilder
                  .HasMany<User>(a => a.Users)
                  .WithOne(a => a.Website)
                  .IsRequired();
@@ -37,7 +42,6 @@ namespace LiveChat.Data
                .HasMany<Session>(a => a.Sessions)
                .WithOne(a => a.Website)
                .IsRequired();
-
 
             var userModelBuilder = modelBuilder.Entity<User>();
 

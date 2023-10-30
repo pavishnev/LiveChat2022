@@ -4,14 +4,16 @@ using LiveChat.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LiveChat.Data.Migrations
 {
     [DbContext(typeof(LiveChatDbContext))]
-    partial class LiveChatDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231029141457_AiContext")]
+    partial class AiContext
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

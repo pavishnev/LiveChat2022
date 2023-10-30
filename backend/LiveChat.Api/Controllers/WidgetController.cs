@@ -1,9 +1,12 @@
-﻿using LiveChat.Business.SignalR;
+﻿using LiveChat.Business.Services.Interfaces;
+using LiveChat.Business.SignalR;
 using LiveChat.Constants.Enums;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Configuration;
+using System;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -17,12 +20,16 @@ namespace LiveChat.Api.Controllers
     [ApiController]
     public class WidgetController : ControllerBase
     {
-        
-        public WidgetController(IConfiguration configuration)
+        private readonly IGptSupportService _gptSupportService;
+
+        public IConfiguration Configuration { get; }
+
+        public WidgetController(IConfiguration configuration, IGptSupportService gptSupportService)
         {
             Configuration = configuration;
+            _gptSupportService = gptSupportService;
         }
-        public IConfiguration Configuration { get; }
+
         [HttpGet("chat-script")]
         public IActionResult GetChatScript()
         { 
@@ -34,6 +41,7 @@ namespace LiveChat.Api.Controllers
         {
             return Content(Properties.Resources.Chat_Styles, "text/css");
         }
+
         [HttpGet("chat-widget")]
         [Authorize(Roles = Roles.Admin)]
         public IActionResult GetChatWidget()
@@ -49,7 +57,29 @@ namespace LiveChat.Api.Controllers
             jsCode.Append($"<script type = \"text/javascript\" src = \"{hostUrl}/api/widget/chat-script\"></script>");
             jsCode.Append($"<link  href=\"{hostUrl}/api/widget/chat-styles\" type=\"text/css\" rel=\"stylesheet\">");
             return Ok(new { jsCode = jsCode.ToString() });
+        }
 
+        [HttpGet("gpt-context/get")]
+        [Authorize(Roles = Roles.Admin)]
+        public IActionResult GetAiContext()
+        {
+            var websiteId = User.FindAll("websiteId").Select(x => x.Value).FirstOrDefault();
+
+            return Ok(new { context = _gptSupportService.GetContext(new Guid(websiteId)) });
+        }
+
+        [HttpPost("gpt-context/set")]
+        [Authorize(Roles = Roles.Admin)]
+        public IActionResult SetAiContext(string newContext)
+        {
+            if (string.IsNullOrEmpty(newContext))
+            {
+                return Conflict(new BadHttpRequestException("Received empty string"));
+            }
+
+            var websiteId = User.FindAll("websiteId").Select(x => x.Value).FirstOrDefault();
+
+            return Ok(new { context = _gptSupportService.SetContext(new Guid(websiteId), newContext)});
         }
     }
 }

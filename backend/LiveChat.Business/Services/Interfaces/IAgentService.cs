@@ -13,7 +13,6 @@ namespace LiveChat.Business.Services.Interfaces
         Website GetWebsiteByUrl(string websiteUrl);
         AgentViewModel GetAgentById(Guid agentid);
         IList<AgentViewModel> GetAllAgents(Guid websiteId);
-
         void DeleteAgent(Guid agentId);
     }
 }

@@ -10,7 +10,6 @@ using Microsoft.AspNet.SignalR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -104,14 +103,13 @@ namespace LiveChat.Api
                         };
                     });
 
-
-
             //Services from business layer
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAgentService, AgentService>();
             services.AddScoped<ISessionService, SessionService>();
             services.AddScoped<ISessionsControl, SessionsControl>();
             services.AddScoped<IChatLogService, ChatLogService>();
+            services.AddScoped<IGptSupportService, GptSupportService>();
             services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
             services.AddHostedService<SessionsControlBackground>();
 
@@ -148,6 +146,7 @@ namespace LiveChat.Api
                 });
             });
         }
+
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -159,12 +158,12 @@ namespace LiveChat.Api
                 using (scope)
                 {
                     var context = scope.ServiceProvider.GetService<LiveChatDbContext>();
-
-                    // context.Database.Migrate();
+                    context.Database.Migrate();
+                    context.Database.EnsureCreated();
                     context.EnsureDatabaseSeeded();
                 }
             }
-       
+
             app.UseHttpsRedirection();
 
             app.UseRouting();

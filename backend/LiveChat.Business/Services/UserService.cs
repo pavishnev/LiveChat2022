@@ -60,7 +60,7 @@ namespace LiveChat.Business.Services
 
             user.WebsiteId = newWebsite.Id;
 
-            user =_userRepository.Add(user);
+            user = _userRepository.Add(user);
             return user.Id;
         }
 
@@ -75,7 +75,7 @@ namespace LiveChat.Business.Services
             user.Salt = CreateSalt();
             user.PasswordHash = new byte[0];
 
-           user= _userRepository.Add(user);
+            user = _userRepository.Add(user);
             //В базе данных создается токен
             //Параметр ExpirationDate определяет дату, после которой регистрация агента будет невозможна
             //Параметр IsExpired получает значение true после того, как токен был использован
@@ -151,7 +151,6 @@ namespace LiveChat.Business.Services
             else return true;
         }
         
-       
         public bool HasWebsite(string url)
         {
             return _websiteRepository.GetByUrl(url) != null;
