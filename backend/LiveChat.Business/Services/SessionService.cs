@@ -16,7 +16,8 @@ namespace LiveChat.Business.Services
     public class SessionService : ISessionService
     {
         public static List<AgentModel> agentsOnline { get; set; } = new List<AgentModel>();
-        public static List<Session> waitingList { get; set; } = new List<Session>();
+        public static List<Session> botSpeakingList { get; set; } = new List<Session>();
+        public static List<Session> agentWaitingList { get; set; } = new List<Session>();
         private readonly ISessionRepository _sessionRepository;
         private readonly IUserRepository _userRepository;
         private readonly IWebsiteRepository _websiteRepository;
@@ -32,39 +33,50 @@ namespace LiveChat.Business.Services
 
         public Guid StartSession(ClientModel newClient)
         {
-           var Website= _websiteRepository.GetById(Guid.Parse(newClient.WebsiteId));
+           var Website = _websiteRepository.GetById(Guid.Parse(newClient.WebsiteId));
             if (Website == null)
                 throw new Exception();
             var session = new Session()
             {   
                 ClientName = newClient.Name,
-                Website =Website,
+                Website = Website,
                 StartedAt = DateTime.Now 
             };
 
-                session = _sessionRepository.Add(session);
+            session = _sessionRepository.Add(session);
+
+            /*
             if (agentsOnline.Any(x => x.WebsiteId == Website.Id.ToString().ToLower()))
-                ConnectClientToAgent(session);
-            else
-                waitingList.Add(session);
+                   ConnectClientToAgent(session);
+               else
+            */
+            //agentWaitingList.Add(session);
+            botSpeakingList.Add(session);
             return session.Id;
         }
 
-        public void ConnectClientToAgent(Session session)
+        public bool TryConnectClientToAgent(Session session)
         {
-            if (!SessionWasConnectedToAgent(session.Id))
-            {
-                var agents = agentsOnline.Where(x => x.WebsiteId == session.WebsiteId.ToString()).ToList();
-                if (agents.Count() == 0 || agentsOnline.Count() == 0) throw new Exception();
-                agentsOnline.Where(x => x.ClientsOnline.Count() == agents.Min(a => a.ClientsOnline.Count()) && x.WebsiteId == session.WebsiteId.ToString()).FirstOrDefault().ClientsOnline.Add(session);
-            }
+            var agents = agentsOnline.Where(x => x.WebsiteId == session.WebsiteId.ToString()).ToList();
+            if (SessionWasConnectedToAgent(session.Id) || agents.Count() == 0 || agentsOnline.Count() == 0)
+                return false;
+
+                agentsOnline
+                    .Where(x => 
+                    x.ClientsOnline.Count() == agents.Min(a => a.ClientsOnline.Count()) && 
+                    x.WebsiteId == session.WebsiteId.ToString())
+                    .FirstOrDefault().ClientsOnline.Add(session);
+                agentWaitingList.RemoveAll(s=>s.Id == session.Id);
+            return true;
         }
 
         public void DisconnectClient(Guid id)
         {
             var session = _sessionRepository.GetById(id);
-            if (waitingList.Any(x => x.Id == id))
-                waitingList.Remove(session);
+            if (agentWaitingList.Any(x => x.Id == id))
+                agentWaitingList.Remove(session);
+            else if (botSpeakingList.Any(x => x.Id == id))
+                botSpeakingList.Remove(session);
             else
             {
                 agentsOnline?.Where(x => x.ClientsOnline.Any(y => y.Id == session.Id))?.FirstOrDefault()?.ClientsOnline
@@ -78,11 +90,11 @@ namespace LiveChat.Business.Services
         public void AddAgentOnline(AgentModel agent)
         {
             agent.WebsiteId = _userRepository.GetById(agent.Id).WebsiteId.ToString();
-            var clients = waitingList.Where(x => x.WebsiteId.ToString() == agent.WebsiteId);
+            var clients = agentWaitingList.Where(x => x.WebsiteId.ToString() == agent.WebsiteId);
             foreach (var item in clients.ToList())
             {
                 agent.ClientsOnline.Add(item);
-                waitingList.Remove(item);
+                agentWaitingList.Remove(item);
             }
             agentsOnline.Add(agent);
         }
@@ -98,14 +110,14 @@ namespace LiveChat.Business.Services
                 {
                     foreach (var item in agent.ClientsOnline)
                     {
-                        ConnectClientToAgent(item);
+                        TryConnectClientToAgent(item);
                     }
                 }
                 else
                 {
                     foreach (var item in agent.ClientsOnline)
                     {
-                        waitingList.Add(item);
+                        agentWaitingList.Add(item);
                     }
                 }
             }
@@ -156,9 +168,28 @@ namespace LiveChat.Business.Services
 
             return agent.Id;
         }
-        public bool IsSessionInTheWaitingList(Guid id)
+        public AgentModel GetAgentBySessionId(Guid sessionId)
         {
-            return waitingList.Any(X509EncryptingCredentials => X509EncryptingCredentials.Id == id);
+            AgentModel agent = agentsOnline?.Where(x => x.ClientsOnline.Any(y => y.Id == sessionId)).FirstOrDefault();
+
+            if (agent == null) throw new Exception();
+
+            return agent;
+        }
+        public bool IsSessionInTheAgentWaitingList(Guid id)
+        {
+            return agentWaitingList.Any(x => x.Id == id);
+        }
+        public bool IsSessionInTheChatbotList(Guid id)
+        {
+            return botSpeakingList.Any(x => x.Id == id);
+        }
+
+        public void AddClientToWaitingList(Guid sessionId)
+        {
+            var item = botSpeakingList.Where(x => x.Id == sessionId).SingleOrDefault();
+            agentWaitingList.Add(item);
+            botSpeakingList.Remove(item);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace LiveChat.Business.Services
         public async Task<bool> Run()
         {
             var notFinishedSessions = _sessionRepository.GetNotEndedSessions();
-            TimeSpan period = new TimeSpan(24, 0, 0);
+            TimeSpan period = new TimeSpan(0, 3, 0);
             foreach (var session in notFinishedSessions)
             {
                 if (DateTime.Now - session.StartedAt >= period)

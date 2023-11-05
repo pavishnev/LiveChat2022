@@ -1,4 +1,5 @@
 ﻿using LiveChat.Business.Models;
+using LiveChat.Data.Entities;
 using System;
 
 namespace LiveChat.Business.Services.Interfaces
@@ -14,6 +15,10 @@ namespace LiveChat.Business.Services.Interfaces
         bool IsAgentOnline(AgentModel agent);
         string GenerateJwt(Guid sessionId);
         Guid GetAgentIdBySessionId(Guid sessionId);
-        bool IsSessionInTheWaitingList(Guid id);
+        AgentModel GetAgentBySessionId(Guid sessionId);
+        bool IsSessionInTheAgentWaitingList(Guid id);
+        bool IsSessionInTheChatbotList(Guid id);
+        void AddClientToWaitingList(Guid sessionId);
+        bool TryConnectClientToAgent(Session session);
     }
 }

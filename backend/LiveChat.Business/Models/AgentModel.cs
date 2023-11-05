@@ -6,7 +6,7 @@ namespace LiveChat.Business.Models
 {
     public class AgentModel
     {
-       public Guid Id { get; set; }
+        public Guid Id { get; set; }
         public string WebsiteId { get; set; }
 
         public List<Session> ClientsOnline { get; set; }

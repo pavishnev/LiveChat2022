@@ -26,13 +26,13 @@ namespace LiveChat.UnitTests.Business
             public override void Before(MethodInfo methodUnderTest)
             {
                 SessionService.agentsOnline.Clear();
-                SessionService.waitingList.Clear();
+                SessionService.agentWaitingList.Clear();
             }
 
             public override void After(MethodInfo methodUnderTest)
             {
                 SessionService.agentsOnline.Clear();
-                SessionService.waitingList.Clear();
+                SessionService.agentWaitingList.Clear();
             }
         }
 
@@ -75,14 +75,14 @@ namespace LiveChat.UnitTests.Business
 
             A.CallTo(() => userRepository.GetById(agent.Id)).Returns(agentFakeRes);
             var service = new SessionService(sessionRepository, userRepository, authOptions, websiteRepository);
-            SessionService.waitingList.Add(session);
+            SessionService.agentWaitingList.Add(session);
 
             //act
             service.AddAgentOnline(agent);
             //assert
             Assert.Single(SessionService.agentsOnline);
             Assert.Equal(agent.Id, SessionService.agentsOnline.FirstOrDefault().Id);
-            Assert.DoesNotContain(session, SessionService.waitingList);
+            Assert.DoesNotContain(session, SessionService.agentWaitingList);
             Assert.Single(SessionService.agentsOnline.FirstOrDefault().ClientsOnline);
         }
 
@@ -131,7 +131,7 @@ namespace LiveChat.UnitTests.Business
             service.RemoveAgentOnline(agent);
             //assert
             Assert.DoesNotContain(agent, SessionService.agentsOnline);
-            Assert.Single(SessionService.waitingList);
+            Assert.Single(SessionService.agentWaitingList);
         }
         [Fact]
         [TestBeforeAfter]
@@ -178,7 +178,7 @@ namespace LiveChat.UnitTests.Business
             //act
             service.StartSession(newClient);
             //assert
-            Assert.Single(SessionService.waitingList);
+            Assert.Single(SessionService.agentWaitingList);
 
         }
 
@@ -223,11 +223,11 @@ namespace LiveChat.UnitTests.Business
 
             A.CallTo(() => sessionRepository.Edit(A<Session>.Ignored)).Returns(session);
             A.CallTo(() => sessionRepository.GetById(A<Guid>.Ignored)).Returns(session);
-            SessionService.waitingList.Add(session);
+            SessionService.agentWaitingList.Add(session);
             //act
             service.DisconnectClient(id);
             //assert
-            Assert.DoesNotContain(session, SessionService.waitingList);
+            Assert.DoesNotContain(session, SessionService.agentWaitingList);
 
         }
 
@@ -424,7 +424,7 @@ namespace LiveChat.UnitTests.Business
 
             SessionService.agentsOnline.Add(agent);
             //act
-            service.ConnectClientToAgent(session);
+            service.TryConnectClientToAgent(session);
             //assert
             Assert.Single(SessionService.agentsOnline.FirstOrDefault().ClientsOnline);
 
@@ -444,9 +444,9 @@ namespace LiveChat.UnitTests.Business
             var session = new Session { Id = new Guid("83A9E26C-07B1-4821-B4A3-56CA06EBF4C7"), Website = new Website() { Id = new Guid("83A9E26C-07B1-4821-B4A3-56CA06EBF4C7") }, WebsiteId = new Guid("83A9E26C-07B1-4821-B4A3-56CA06EBF4C7") };
             var service = new SessionService(sessionRepository, userRepository, authOptions, websiteRepository);
 
-            SessionService.waitingList.Add(session);
+            SessionService.agentWaitingList.Add(session);
             //act
-           var result = service.IsSessionInTheWaitingList(session.Id);
+           var result = service.IsSessionInTheAgentWaitingList(session.Id);
             //assert
             Assert.True(result);
         }
@@ -464,7 +464,7 @@ namespace LiveChat.UnitTests.Business
             var session = new Session { Id = new Guid("83A9E26C-07B1-4821-B4A3-56CA06EBF4C7"), Website = new Website() { Id = new Guid("83A9E26C-07B1-4821-B4A3-56CA06EBF4C7") }, WebsiteId = new Guid("83A9E26C-07B1-4821-B4A3-56CA06EBF4C7") };
             var service = new SessionService(sessionRepository, userRepository, authOptions, websiteRepository);
             //act
-            var result = service.IsSessionInTheWaitingList(session.Id);
+            var result = service.IsSessionInTheAgentWaitingList(session.Id);
             //assert
             Assert.False(result);
         }
