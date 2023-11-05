@@ -16,7 +16,7 @@
         <button class="btn" (click)="setCurrentChat(chatListItem);">
           <mat-icon class="icon">person</mat-icon>
           <p class="msg-n-name">
-            {{ chatListItem.user.name }} -- {{ chatListItem.messages[chatListItem.messages.length - 1].text.substring(0, 12) }}
+            {{ chatListItem.user.name }} -- {{ chatMessagePreview(chatListItem) }}
           </p>
         </button>
       </div>

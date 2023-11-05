@@ -11,13 +11,13 @@ import { SESSION_TOKEN } from './auth.service';
 @Injectable({
   providedIn: 'root'
 })
-export class SignalrService implements OnInit{
+export class SignalrService implements OnInit {
   public static data: MessageModel[] = [];
   public static broadcastedData: MessageModel[] = [];
   private hubConnection!: signalR.HubConnection;
   public accessToken = localStorage.getItem(SESSION_TOKEN)!;
 
-  constructor(){}
+  constructor() { }
 
   options: IHttpConnectionOptions = {
     accessTokenFactory: () => {
@@ -25,16 +25,15 @@ export class SignalrService implements OnInit{
     }
   };
 
-  ngOnInit():void
-  {
+  ngOnInit(): void {
     // Refreshing chat messages every second
     this.startConnection();
   }
 
   public startConnection = () => {
-    this.accessToken =  localStorage.getItem(SESSION_TOKEN)!;
+    this.accessToken = localStorage.getItem(SESSION_TOKEN)!;
 
-    this.options= {
+    this.options = {
       accessTokenFactory: () => {
         return this.accessToken;
       },
@@ -42,6 +41,7 @@ export class SignalrService implements OnInit{
 
     this.hubConnection = new signalR.HubConnectionBuilder()
       .withUrl(`${environment.apiUrl}/chat`, this.options)
+      .withAutomaticReconnect()
       .build();
 
     this.hubConnection
@@ -54,8 +54,8 @@ export class SignalrService implements OnInit{
     this.Receive();
   }
 
-  public SendMessage (Message: MessageModel) {
-    if(Message.text != "") {
+  public SendMessage(Message: MessageModel) {
+    if (Message.text != "") {
       this.hubConnection.invoke('SendMessageToAgent', Message)
         .catch(err => console.error(err));
       SignalrService.broadcastedData.push(Message);
@@ -63,9 +63,9 @@ export class SignalrService implements OnInit{
     }
   }
 
-  public Receive=()=>{
+  public Receive = () => {
     this.hubConnection.on('Receive', (data) => {
-      if(data.text != ""){
+      if (data.text != "") {
         SignalrService.broadcastedData.push(data);
         localStorage.setItem('chat', JSON.stringify(SignalrService.broadcastedData));
       }

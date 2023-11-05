@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {from, interval} from 'rxjs';
+import { from, interval } from 'rxjs';
 
 import { MessageModel } from '../models/message.model';
 import { SignalRService } from '../services/signal-r.service';
@@ -7,8 +7,8 @@ import { ChatModel } from '../models/chat.model';
 import { AuthService } from '../services/auth.service';
 
 import { DatePipe } from "@angular/common";
-import {ChatRemoverService} from "../services/chat-remover.service";
-import {OnlineService} from "../services/online.service";
+import { ChatRemoverService } from "../services/chat-remover.service";
+import { OnlineService } from "../services/online.service";
 
 @Component({
   selector: 'app-chat',
@@ -18,13 +18,13 @@ import {OnlineService} from "../services/online.service";
 
 export class ChatComponent implements OnInit {
   constructor(private _signalRService: SignalRService,
-              private _authorizeService: AuthService,
-              private _chatRemover: ChatRemoverService,
-              private _onlineService: OnlineService) {
+    private _authorizeService: AuthService,
+    private _chatRemover: ChatRemoverService,
+    private _onlineService: OnlineService) {
   }
 
   // Current user message
-  message: MessageModel = {sessionId: "", text: "", isSentByClient: true, timestamp: new Date()};
+  message: MessageModel = { sessionId: "", text: "", isSentByClient: true, timestamp: new Date() };
 
   // Received messages array
   received: MessageModel[] = [];
@@ -40,12 +40,14 @@ export class ChatComponent implements OnInit {
 
   isOnline: boolean = true;
 
+  chatMessagePreview(chatListItem: ChatModel): string {
+    return chatListItem.messages[chatListItem.messages.length - 1]?.text.substring(0, 12) ?? "New chat";
+  }
   ngOnInit(): void {
 
     // Refreshing chat messages every second
     interval(1000).subscribe(() => {
-      if(this.chats.indexOf(this.chat) == -1)
-      {
+      if (this.chats.indexOf(this.chat) == -1) {
         this.chat = new ChatModel();
       }
       this.chats = SignalRService.chats;
@@ -67,12 +69,10 @@ export class ChatComponent implements OnInit {
 
   switchOnlineStatus() {
     this.isOnline = !this.isOnline;
-    if(this.isOnline)
-    {
+    if (this.isOnline) {
       this._onlineService.addAgentOnline();
     }
-    else
-    {
+    else {
       this._onlineService.removeAgentOnline();
     }
   }

@@ -10,16 +10,15 @@ import { ACCESS_TOKEN_KEY } from './auth.service';
   providedIn: 'root'
 })
 export class SignalRService implements OnInit {
-  public static data: MessageModel[]=[];
-  public static broadcastedData: MessageModel[]=[];
-  public static chats:ChatModel[]=[];
-  public accessToken= localStorage.getItem(ACCESS_TOKEN_KEY)!;
+  public static data: MessageModel[] = [];
+  public static broadcastedData: MessageModel[] = [];
+  public static chats: ChatModel[] = [];
+  public accessToken = localStorage.getItem(ACCESS_TOKEN_KEY)!;
   private hubConnection!: signalR.HubConnection;
 
-  ngOnInit(): void
-  {
+  ngOnInit(): void {
     // Refreshing chat messages every second
-  this.startConnection();
+    this.startConnection();
 
   }
   options: IHttpConnectionOptions = {
@@ -28,30 +27,32 @@ export class SignalRService implements OnInit {
     }
   };
 
-  public startConnection = () => {
+  public startConnection() {
     console.log("startC");
     this.accessToken = localStorage.getItem(ACCESS_TOKEN_KEY)!;
-    this.options= {
+    this.options = {
       accessTokenFactory: () => {
         return this.accessToken;
       }
     };
     this.hubConnection = new signalR.HubConnectionBuilder()
       .withUrl(`${environment.apiUrl}/chat`, this.options)
+      .withAutomaticReconnect()
       .build();
 
     this.hubConnection
       .start()
-      .then(() => {console.log('Connection with chat backend established');})
+      .then(() => { console.log('Connection with chat backend established'); })
       .catch(err => console.log('Got error while connecting to backend: ' + err));
 
     this.receive();
     this.addBroadcastChatDataListener();
     this.addChat();
+    this.pushChats();
 
     let chatsTemp: ChatModel[] = JSON.parse(localStorage.getItem('chats')!);
 
-    if(chatsTemp != null) {
+    if (chatsTemp != null) {
       SignalRService.chats = chatsTemp;
     }
   }
@@ -74,31 +75,44 @@ export class SignalRService implements OnInit {
 
   public addBroadcastChatDataListener = () => {
     this.hubConnection.on('broadcastchatdata', (data) => {
-      if(data.text != ""){
+      if (data.text != "") {
         SignalRService.broadcastedData.push(data[0]);
       }
     })
   }
 
-  public sendMessage (Message: MessageModel) {
+  public sendMessage(Message: MessageModel) {
     this.hubConnection.invoke('SendMessageToClient', Message)
       .catch(err => console.error(err));
   }
 
   public addChat = () => {
     this.hubConnection.on('AddChat', (data) => {
-       if(!SignalRService.chats.includes(data)){
-         SignalRService.chats.push(data);
-         console.log(data);
+      if (!SignalRService.chats.some(chats => chats.user.id == data.user.id)) {
+        SignalRService.chats.push(data);
+        console.log(data);
       }
     });
   }
 
+  public pushChats = () => {
+    this.hubConnection.on('PushChats', (chatsData: ChatModel[]) => {
+      /* var filteredChats = SignalRService.chats.filter(ch =>
+       (chatsData.some(chat => chat.user.id == ch.user.id
+         && ch.messages.length <= chat.messages.length))))*/
+
+      SignalRService.chats = chatsData;
+      console.log(chatsData);
+
+    });
+  }
+
+
   public receive = () => {
     this.hubConnection.on('Receive', (data) => {
-      if(data.text != ""){
+      if (data.text != "") {
         SignalRService.chats.forEach(chat => {
-          if(data.sessionId == chat.user.id){
+          if (data.sessionId == chat.user.id) {
             console.log(chat);
             chat.messages.push(data);
           }
